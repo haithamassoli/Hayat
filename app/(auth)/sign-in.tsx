@@ -15,6 +15,7 @@ import { useState } from "react";
 import { type ValidationSchemaType, validationSchema } from "@src/types/schema";
 import Loading from "@components/loading";
 import { loginMutation } from "@apis/auth";
+import CustomButton from "@components/ui/customButton";
 
 const SignIn = () => {
   const router = useRouter();
@@ -79,14 +80,11 @@ const SignIn = () => {
             style={{ width: "100%", fontFamily: "CairoReg" }}
           />
           <Box height={vs(32)} />
-          <Button
+          <CustomButton
             mode="contained-tonal"
             onPress={handleSubmit(onSubmit)}
-            style={{ width: "100%" }}
-            labelStyle={{ fontFamily: "CairoSemiBold" }}
-          >
-            تسجيل الدخول
-          </Button>
+            title="تسجيل الدخول"
+          />
           <TouchableOpacity onPress={() => router.push("sign-up")}>
             <ReText marginTop="hm" marginHorizontal="hs" variant="BodySmall">
               ليس لديك حساب؟ سجل الآن

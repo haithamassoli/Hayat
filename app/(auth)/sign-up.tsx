@@ -15,6 +15,7 @@ import { type ValidationSchemaType, validationSchema } from "@src/types/schema";
 import { useState } from "react";
 import { registerMutation } from "@apis/auth";
 import Loading from "@components/loading";
+import CustomButton from "@components/ui/customButton";
 
 const SingUp = () => {
   const router = useRouter();
@@ -79,14 +80,11 @@ const SingUp = () => {
             style={{ width: "100%", fontFamily: "CairoReg" }}
           />
           <Box height={vs(32)} />
-          <Button
+          <CustomButton
             mode="contained-tonal"
             onPress={handleSubmit(onSubmit)}
-            style={{ width: "100%" }}
-            labelStyle={{ fontFamily: "CairoSemiBold" }}
-          >
-            تسجيل
-          </Button>
+            title="تسجيل"
+          />
           <TouchableOpacity onPress={() => router.push("sign-in")}>
             <ReText marginTop="hm" marginHorizontal="hs" variant="BodySmall">
               لديك حساب؟ تسجيل الدخول
