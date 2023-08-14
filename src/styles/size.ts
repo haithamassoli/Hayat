@@ -1,4 +1,4 @@
-import { hs, ms } from "@utils/platform";
+import { ms } from "@utils/platform";
 
 export const FontSize = {
   "4xs": ms(10),
@@ -16,9 +16,9 @@ export const FontSize = {
 };
 
 export const IconSize = {
-  xs: hs(12),
-  s: hs(16),
-  m: hs(24),
-  l: hs(32),
-  xl: hs(40),
+  xs: ms(12),
+  s: ms(16),
+  m: ms(24),
+  l: ms(32),
+  xl: ms(40),
 };

@@ -1,3 +1,4 @@
+import { vs } from "@utils/platform";
 import { Controller, Control } from "react-hook-form";
 import { TextInput, HelperText } from "react-native-paper";
 
@@ -23,6 +24,10 @@ const ControlledInput = ({
       }) => (
         <>
           <TextInput
+            contentStyle={{
+              height: vs(48),
+              fontFamily: "CairoBold",
+            }}
             {...textInputProps}
             value={value}
             onChangeText={onChange}

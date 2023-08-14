@@ -157,10 +157,7 @@ export default function RootLayout() {
 
   const [fontsLoaded] = useFonts({
     CairoReg: require("@assets/fonts/Cairo-Reg.ttf"),
-    CairoMedium: require("@assets/fonts/Cairo-Medium.ttf"),
     CairoBold: require("@assets/fonts/Cairo-Bold.ttf"),
-    CairoSemiBold: require("@assets/fonts/Cairo-SemiBold.ttf"),
-    SahabahLight: require("@assets/fonts/DG-Sahabah-Light.ttf"),
     SahabahBold: require("@assets/fonts/DG-Sahabah-Bold.ttf"),
     SahabahReg: require("@assets/fonts/DG-Sahabah-Reg.ttf"),
   });

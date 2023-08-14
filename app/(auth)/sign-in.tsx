@@ -7,7 +7,7 @@ import { Button, TextInput } from "react-native-paper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { vs } from "@utils/platform";
-import ControlledInput from "@components/controlledInput";
+import ControlledInput from "@components/ui/controlledInput";
 import { useTheme } from "@shopify/restyle";
 import { TouchableOpacity } from "react-native";
 import Snackbar from "@components/snackbar";

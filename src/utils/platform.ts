@@ -1,4 +1,4 @@
-import { Platform, TextStyle } from "react-native";
+import { Platform } from "react-native";
 import { height, width } from "./helper";
 
 const guidelineBaseWidth = 375;
@@ -17,12 +17,6 @@ export const moderateVerticalScale = (size: number, factor = 0.5) =>
   size + (verticalScale(size) - size) * factor;
 
 export const isIOS = Platform.OS === "ios";
-
-export function fontSizing(size: number): TextStyle {
-  return {
-    fontSize: isIOS ? hs(size) : hs(size) - 1,
-  };
-}
 
 export const hs = horizontalScale;
 export const vs = verticalScale;

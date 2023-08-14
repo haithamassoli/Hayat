@@ -4,6 +4,6 @@ export interface ISnackbarState {
   snackbarText: string;
 }
 
-export const createSnackbarSlice: StateCreator<ISnackbarState> = (set) => ({
+export const createSnackbarSlice: StateCreator<ISnackbarState> = () => ({
   snackbarText: "",
 });

@@ -3,7 +3,7 @@ import Borders from "./border";
 import Colors from "./colors";
 import Spacing from "./spacing";
 import { FontSize } from "./size";
-import { fontSizing } from "@utils/platform";
+import { hs } from "@utils/platform";
 
 const theme = createTheme({
   colors: {
@@ -58,85 +58,85 @@ const theme = createTheme({
   textVariants: {
     DisplayLarge: {
       fontFamily: "CairoReg",
-      ...fontSizing(FontSize["5xl"]),
+      fontSize: FontSize["5xl"],
       color: "text",
     },
     DisplayMedium: {
-      ...fontSizing(FontSize["4xl"]),
+      fontSize: FontSize["4xl"],
       fontFamily: "CairoBold",
       color: "text",
     },
     DisplaySmall: {
-      ...fontSizing(FontSize["3xl"]),
+      fontSize: FontSize["3xl"],
       fontFamily: "CairoReg",
       color: "text",
     },
     HeadlineLarge: {
-      ...fontSizing(FontSize["2xl"]),
+      fontSize: FontSize["2xl"],
       fontFamily: "CairoBold",
       color: "text",
     },
     HeadlineMedium: {
-      ...fontSizing(FontSize.xl),
+      fontSize: FontSize.xl,
       fontFamily: "CairoReg",
       color: "text",
     },
     HeadlineSmall: {
-      ...fontSizing(FontSize.l),
+      fontSize: FontSize.l,
       fontFamily: "CairoReg",
       color: "text",
     },
     TitleLarge: {
-      ...fontSizing(FontSize.m),
+      fontSize: FontSize.m,
       fontFamily: "CairoBold",
       color: "text",
     },
     TitleMedium: {
-      ...fontSizing(FontSize.s),
-      fontFamily: "CairoMedium",
-      letterSpacing: 0.15,
+      fontSize: FontSize.s,
+      fontFamily: "CairoReg",
+      letterSpacing: hs(0.15),
       color: "text",
     },
     TitleSmall: {
-      ...fontSizing(FontSize["2xs"]),
-      fontFamily: "CairoMedium",
-      letterSpacing: 0.1,
+      fontSize: FontSize["2xs"],
+      fontFamily: "CairoReg",
+      letterSpacing: hs(0.1),
       color: "text",
     },
     BodyLarge: {
-      ...fontSizing(FontSize.xs),
+      fontSize: FontSize.xs,
       fontFamily: "CairoReg",
-      letterSpacing: 0.5,
+      letterSpacing: hs(0.5),
       color: "text",
     },
     BodyMedium: {
-      ...fontSizing(FontSize["2xs"]),
+      fontSize: FontSize["2xs"],
       fontFamily: "CairoReg",
-      letterSpacing: 0.25,
+      letterSpacing: hs(0.25),
       color: "text",
     },
     BodySmall: {
-      ...fontSizing(FontSize["3xs"]),
+      fontSize: FontSize["3xs"],
       fontFamily: "CairoReg",
-      letterSpacing: 0.4,
+      letterSpacing: hs(0.4),
       color: "text",
     },
     LabelLarge: {
-      ...fontSizing(FontSize["2xs"]),
-      fontFamily: "CairoMedium",
-      letterSpacing: 0.1,
+      fontSize: FontSize["2xs"],
+      fontFamily: "CairoReg",
+      letterSpacing: hs(0.1),
       color: "text",
     },
     LabelMedium: {
-      ...fontSizing(FontSize["3xs"]),
-      fontFamily: "CairoMedium",
-      letterSpacing: 0.5,
+      fontSize: FontSize["3xs"],
+      fontFamily: "CairoReg",
+      letterSpacing: hs(0.5),
       color: "text",
     },
     LabelSmall: {
-      ...fontSizing(FontSize["4xs"]),
-      fontFamily: "CairoMedium",
-      letterSpacing: 0.5,
+      fontSize: FontSize["4xs"],
+      fontFamily: "CairoReg",
+      letterSpacing: hs(0.5),
       color: "text",
     },
   },
