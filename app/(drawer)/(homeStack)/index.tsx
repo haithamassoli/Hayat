@@ -1,6 +1,6 @@
 import { Box, ReText } from "@styles/theme";
 
-const Home = () => {
+const HomeScreen = () => {
   return (
     <Box flex={1} justifyContent="center" alignItems="center">
       <ReText variant="DisplayMedium">Home</ReText>
@@ -9,4 +9,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeScreen;

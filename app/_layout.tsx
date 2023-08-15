@@ -200,14 +200,7 @@ export default function RootLayout() {
                 screenOptions={{
                   headerShown: false,
                 }}
-              >
-                <Stack.Screen
-                  name="modal"
-                  options={{
-                    presentation: "modal",
-                  }}
-                />
-              </Stack>
+              />
             </Box>
           </ThemeProvider>
         </PaperProvider>
