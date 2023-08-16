@@ -158,8 +158,6 @@ export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     CairoReg: require("@assets/fonts/Cairo-Reg.ttf"),
     CairoBold: require("@assets/fonts/Cairo-Bold.ttf"),
-    SahabahBold: require("@assets/fonts/DG-Sahabah-Bold.ttf"),
-    SahabahReg: require("@assets/fonts/DG-Sahabah-Reg.ttf"),
   });
   const onLayoutRootView = useCallback(() => {
     if (fontsLoaded) {

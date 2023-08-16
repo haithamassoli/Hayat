@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import CustomDrawer from "@src/layouts/custom-drawer";
+import { ms } from "@utils/platform";
 import { Drawer } from "expo-router/drawer";
 
 const HomeDrawer = () => {
@@ -8,8 +9,13 @@ const HomeDrawer = () => {
       drawerContent={(props) => <CustomDrawer {...props} />}
       screenOptions={{
         drawerPosition: "left",
+        drawerType: "front",
         headerTitleStyle: {
           fontFamily: "CairoBold",
+          fontSize: ms(16),
+        },
+        drawerStyle: {
+          width: "68%",
         },
         headerLeft: () => null,
       }}

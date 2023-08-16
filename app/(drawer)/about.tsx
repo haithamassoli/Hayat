@@ -14,8 +14,8 @@ const About = () => {
           ),
         }}
       />
-      <ReText variant="DisplayMedium">About</ReText>
-      <ReText variant="BodySmall">حياة</ReText>
+      <ReText variant="DisplaySmall">About</ReText>
+      <ReText variant="BodyLarge">حياة</ReText>
     </Box>
   );
 };
