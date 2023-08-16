@@ -99,7 +99,7 @@ const ImagesCarousel = ({ images }: Props) => {
             style={[
               styles.dot,
               {
-                borderColor: isDark ? Colors.primary4 : Colors.primary7,
+                borderColor: isDark ? Colors.primary : Colors.primary,
               },
             ]}
           />
@@ -112,10 +112,10 @@ const ImagesCarousel = ({ images }: Props) => {
               {
                 borderColor:
                   index === images.length - selectedIndex - 1
-                    ? colors.primary7
+                    ? colors.secondary
                     : colors.black6,
                 backgroundColor:
-                  index === selectedIndex ? colors.primary7 : colors.black6,
+                  index === selectedIndex ? colors.secondary : colors.black6,
               },
             ]}
           />
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   dotsContainer: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     marginTop: vs(8),
     zIndex: 100,
   },
@@ -155,6 +155,6 @@ const styles = StyleSheet.create({
     borderRadius: ms(6),
     borderWidth: ms(4),
     margin: ms(4),
-    backgroundColor: Colors.primary6,
+    backgroundColor: Colors.primary,
   },
 });

@@ -29,6 +29,7 @@ const HomeStack = () => {
         name="categories/[id]"
         options={{
           title: "",
+          headerShown: false,
         }}
       />
     </Stack>
