@@ -1,3 +1,5 @@
+import { Video, fetchCategoriesQuery } from "@apis/categories";
+import Loading from "@components/loading";
 import VideoButton from "@components/ui/videoButton";
 import { Feather } from "@expo/vector-icons";
 import Colors from "@styles/colors";
@@ -10,7 +12,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const Category = () => {
   const router = useRouter();
   const { id }: { id?: string } = useSearchParams();
-  console.log(id);
+  const { isLoading, data: categories } = fetchCategoriesQuery();
+
+  categories?.filter((category) => category.route === id);
+
+  if (isLoading) return <Loading />;
+
   return (
     <SafeAreaView style={{ flex: 1, marginHorizontal: hs(16) }}>
       <Stack.Screen
@@ -50,30 +57,20 @@ const Category = () => {
         fontFamily="CairoBold"
         textAlign="left"
         color="ternary"
+        marginTop="vs"
       >
         المحاضرات التربوية
       </ReText>
       <Box gap="vm">
-        <VideoButton
-          title="المحاضرة الأولى"
-          onPress={() => router.push("/video")}
-          duration="00:00:00"
-        />
-        <VideoButton
-          title="المحاضرة الأولى"
-          onPress={() => router.push("/video")}
-          duration="00:00:00"
-        />
-        <VideoButton
-          title="المحاضرة الأولى"
-          onPress={() => router.push("/video")}
-          duration="00:00:00"
-        />
-        <VideoButton
-          title="المحاضرة الأولى"
-          onPress={() => router.push("/video")}
-          duration="00:00:00"
-        />
+        {Array.isArray(categories) &&
+          categories[0].videos?.map((video: Video, index: number) => (
+            <VideoButton
+              key={index.toString()}
+              title={`1. ${video.title}`}
+              onPress={() => router.push(`/videos/${video.title}`)}
+              duration={video.duration}
+            />
+          ))}
       </Box>
     </SafeAreaView>
   );

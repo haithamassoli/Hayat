@@ -1,10 +1,11 @@
+import { fetchCategoriesQuery } from "@apis/categories";
 import CategoryCard from "@components/categoryCard";
 import DoctorCard from "@components/doctorCard";
 import ImagesCarousel from "@components/imagesCarousel";
+import Loading from "@components/loading";
 import Snackbar from "@components/snackbar";
 import { Feather } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
-import { categories } from "@src/data/categories";
 import { doctors } from "@src/data/doctors";
 import { official } from "@src/data/official";
 import { Box, ReText, Theme } from "@styles/theme";
@@ -17,6 +18,10 @@ const HomeScreen = () => {
   const navigation: any = useNavigation();
   const { colors } = useTheme<Theme>();
   const router = useRouter();
+  const { isLoading, data: categories } = fetchCategoriesQuery();
+
+  if (isLoading) return <Loading />;
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Snackbar />
@@ -68,10 +73,10 @@ const HomeScreen = () => {
             marginVertical: vs(12),
           }}
         >
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <Box key={category.id} marginHorizontal="hs">
               <CategoryCard
-                onPress={() => router.push(category.route)}
+                onPress={() => router.push(`/categories/${category.route}`)}
                 title={category.title}
               />
             </Box>
