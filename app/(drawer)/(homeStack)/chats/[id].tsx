@@ -44,35 +44,39 @@ const ChatScreen = () => {
   const { mutate } = addMessageMutation();
 
   useEffect(() => {
-    const collectionRef = collection(db, "messages");
-    const q = query(
-      collectionRef,
-      where("room", "==", `doctor=${id}&user=${user?.uid}`),
-      orderBy("createdAt", "desc")
-    );
+    try {
+      const collectionRef = collection(db, "messages");
+      const q = query(
+        collectionRef,
+        where("room", "==", `doctor=${id}&user=${user?.uid}`),
+        orderBy("createdAt", "desc")
+      );
 
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const oldMessages = querySnapshot.docs.map((doc) => ({
-        _id: doc.data()._id,
-        createdAt: doc.data().createdAt.toDate(),
-        text: doc.data().text,
-        user: {
-          _id: user?.uid!,
-        },
-      }));
-      setMessages([
-        ...oldMessages,
-        {
-          _id: 1,
-          text: "مرحبا بك كيف يمكنني مساعدتك؟",
-          createdAt: new Date(),
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const oldMessages = querySnapshot.docs.map((doc) => ({
+          _id: doc.data()._id,
+          createdAt: doc.data().createdAt.toDate(),
+          text: doc.data().text,
           user: {
-            _id: id!,
+            _id: user?.uid!,
           },
-        },
-      ]);
-    });
-    return unsubscribe;
+        }));
+        setMessages([
+          ...oldMessages,
+          {
+            _id: 1,
+            text: "مرحبا بك كيف يمكنني مساعدتك؟",
+            createdAt: new Date("2023-9-22T14:48:00"),
+            user: {
+              _id: id!,
+            },
+          },
+        ]);
+      });
+      return unsubscribe;
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   const onSend = useCallback((messages = []) => {

@@ -38,7 +38,7 @@ const VideoScreen = () => {
   const { isLoading, data: categories, refetch } = fetchCategoriesQuery();
 
   const category = categories?.filter((category) => category.route === id);
-  const data = category?.[0].videos.filter(
+  const data = category?.[0]?.videos?.filter(
     (video: IVideo) => video.title === videoTitle
   )[0];
 
@@ -171,7 +171,7 @@ const VideoScreen = () => {
                         {comment?.name}
                       </ReText>
                       <ReText variant="BodySmall">
-                        {dateFromNow(comment?.createdAt)}
+                        {dateFromNow(comment?.createdAt?.toDate())}
                       </ReText>
                     </Box>
                     <ReText

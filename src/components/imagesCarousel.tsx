@@ -70,7 +70,7 @@ const ImagesCarousel = ({ images }: Props) => {
         >
           {images.length === 0 && (
             <Image
-              source={require("@assets/images/carousel/1.jpg")}
+              source={require("@assets/images/carousel/1.png")}
               style={styles.image}
             />
           )}
@@ -86,7 +86,7 @@ const ImagesCarousel = ({ images }: Props) => {
             >
               <Image
                 source={image}
-                defaultSource={require("@assets/images/carousel/1.jpg")}
+                defaultSource={require("@assets/images/carousel/1.png")}
                 style={styles.image}
               />
             </TouchableOpacity>
