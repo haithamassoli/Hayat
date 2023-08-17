@@ -41,13 +41,12 @@
     ],
     "extra": {
       "firebase": {
-        "apiKey": "",
-        "authDomain": "",
-        "projectId": "",
-        "storageBucket": "",
-        "messagingSenderId": "",
-        "appId": "",
-        "measurementId": ""
+        "apiKey": "AIzaSyCHOAZYrjZeIYOlW0obhe32ykeKuXnOuk8",
+        "authDomain": "hayat-jo.firebaseapp.com",
+        "projectId": "hayat-jo",
+        "storageBucket": "hayat-jo.appspot.com",
+        "messagingSenderId": "931682740672",
+        "appId": "1:931682740672:web:dbc8f0e8e2908219d4c025"
       }
     }
   }
