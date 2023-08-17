@@ -14,7 +14,11 @@ export const addMessageMutation = () =>
   useMutation((message: Messages) => addMessage(message));
 
 const addMessage = async (message: Messages) => {
-  const messagesRef = collection(db, "messages");
-  const newMessage = await addDoc(messagesRef, message);
-  return newMessage;
+  try {
+    const messagesRef = collection(db, "messages");
+    const newMessage = await addDoc(messagesRef, message);
+    return newMessage;
+  } catch (err) {
+    console.log(err);
+  }
 };

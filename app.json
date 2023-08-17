@@ -3,7 +3,7 @@
     "name": "حيـاة",
     "slug": "hayat",
     "scheme": "hayat",
-    "version": "0.1.0",
+    "version": "0.5.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -23,7 +23,7 @@
       "bundleIdentifier": "com.haithamassoli.hayat"
     },
     "android": {
-      "versionCode": 1,
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#A8DADC"
@@ -47,6 +47,9 @@
         "storageBucket": "hayat-jo.appspot.com",
         "messagingSenderId": "931682740672",
         "appId": "1:931682740672:web:dbc8f0e8e2908219d4c025"
+      },
+      "eas": {
+        "projectId": "0b7297c7-a0c9-4976-83db-dfb8bca24593"
       }
     }
   }

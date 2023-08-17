@@ -34,18 +34,22 @@ export const fetchCategoriesQuery = () => {
 };
 
 const fetchCategories = async () => {
-  const categoriesRef = collection(db, "categories");
-  const querySnapshot = await getDocs(categoriesRef);
-  const categories: Categories[] = [];
-  querySnapshot.forEach((doc) => {
-    categories.push({
-      id: doc.id,
-      title: doc.data().title,
-      route: doc.data().route,
-      videos: doc.data().videos,
+  try {
+    const categoriesRef = collection(db, "categories");
+    const querySnapshot = await getDocs(categoriesRef);
+    const categories: Categories[] = [];
+    querySnapshot.forEach((doc) => {
+      categories.push({
+        id: doc.id,
+        title: doc.data().title,
+        route: doc.data().route,
+        videos: doc.data().videos,
+      });
     });
-  });
-  return categories;
+    return categories;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const addCommentMutation = () =>
@@ -64,20 +68,24 @@ const addComment = async (
     categoryId: string;
   }
 ) => {
-  const categoriesRef = doc(db, "categories", data.categoryId);
-  const categoriesSnapshot = await getDoc(categoriesRef);
-  const categoriesData = categoriesSnapshot.data();
-  const videos = categoriesData?.videos;
-  const videoIndex = videos.findIndex(
-    (video: Video) => video.title === data.videoTitle
-  );
-  videos[videoIndex].comments.push({
-    name: data.name,
-    comment: data.comment,
-    createdAt: new Date(),
-  });
-  await updateDoc(categoriesRef, {
-    videos: videos,
-  });
-  return null;
+  try {
+    const categoriesRef = doc(db, "categories", data.categoryId);
+    const categoriesSnapshot = await getDoc(categoriesRef);
+    const categoriesData = categoriesSnapshot.data();
+    const videos = categoriesData?.videos;
+    const videoIndex = videos.findIndex(
+      (video: Video) => video.title === data.videoTitle
+    );
+    videos[videoIndex].comments.push({
+      name: data.name,
+      comment: data.comment,
+      createdAt: new Date(),
+    });
+    await updateDoc(categoriesRef, {
+      videos: videos,
+    });
+    return null;
+  } catch (err) {
+    console.log(err);
+  }
 };
