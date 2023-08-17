@@ -11,7 +11,6 @@ const {
   storageBucket,
   messagingSenderId,
   appId,
-  measurementId,
 } = Constants?.expoConfig?.extra?.firebase;
 
 const firebaseConfig = {
@@ -21,7 +20,6 @@ const firebaseConfig = {
   storageBucket: storageBucket,
   messagingSenderId: messagingSenderId,
   appId: appId,
-  measurementId: measurementId,
 };
 
 const app = initializeApp(firebaseConfig);
