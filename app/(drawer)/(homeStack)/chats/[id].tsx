@@ -2,11 +2,12 @@ import { getUserByIdQuery } from "@apis/auth";
 import { addMessageMutation } from "@apis/messages";
 import Header from "@components/header";
 import Loading from "@components/loading";
+import Snackbar from "@components/snackbar";
 import { Feather } from "@expo/vector-icons";
 import { db } from "@src/firebase.config";
 import { vs } from "@utils/platform";
 import { useStore } from "@zustand/store";
-import { useRouter, useSearchParams } from "expo-router";
+import { useSearchParams } from "expo-router";
 import {
   collection,
   onSnapshot,
@@ -34,7 +35,6 @@ type Message = {
 };
 
 const ChatScreen = () => {
-  const router = useRouter();
   const { id }: { id?: string } = useSearchParams();
   const { colors } = useTheme();
   const { user } = useStore();
@@ -76,6 +76,10 @@ const ChatScreen = () => {
   }, []);
 
   const onSend = useCallback((messages = []) => {
+    if (!user)
+      return useStore.setState({
+        snackbarText: "يجب عليك تسجيل الدخول أولاً",
+      });
     const { _id, text } = messages[0];
     mutate({
       _id: _id,
@@ -94,6 +98,7 @@ const ChatScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Header title={doctorData?.name} />
+      <Snackbar />
       <GiftedChat
         messages={messages}
         onSend={(messages: any) => onSend(messages)}
