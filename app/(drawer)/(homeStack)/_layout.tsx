@@ -7,12 +7,13 @@ const HomeStack = () => {
         headerTitleAlign: "center",
         headerBackTitle: "الرجوع",
         headerBackTitleVisible: false,
+        headerShown: false,
         headerTitleStyle: {
           fontFamily: "CairoBold",
         },
       }}
     >
-      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="index" />
       <Stack.Screen
         name="chats/[id]"
         options={{
@@ -29,7 +30,6 @@ const HomeStack = () => {
         name="categories/[id]"
         options={{
           title: "",
-          headerShown: false,
         }}
       />
     </Stack>

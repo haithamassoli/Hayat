@@ -34,13 +34,13 @@ const CustomDrawer = (props: any) => {
                 overflow: "hidden",
               }}
             >
-              <Feather name="user" color={colors.primary} size={IconSize.xl} />
+              <Feather name="user" color={colors.ternary} size={IconSize.xl} />
             </Box>
             <Box alignItems={"center"}>
-              <ReText variant="TitleMedium" textAlign="center" color="primary">
+              <ReText variant="TitleMedium" textAlign="center" color="ternary">
                 الملف الشخصي
               </ReText>
-              <ReText variant="TitleSmall" color="primary" textAlign="center">
+              <ReText variant="TitleSmall" color="ternary" textAlign="center">
                 {!!user ? user.email.split("@")[0] : "تسجيل الدخول"}
               </ReText>
             </Box>

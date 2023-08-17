@@ -97,7 +97,6 @@ const getTheme = async () => {
 const getUserFromStorage = async () => {
   const user = await getDataFromStorage("user");
   if (user) useStore.setState({ user });
-  console.log("user is:", user);
 };
 
 export default function RootLayout() {
@@ -152,7 +151,7 @@ export default function RootLayout() {
     } else if (user && segments[0] === "(auth)") {
       router.replace("/");
     }
-    console.log(user, segments);
+    console.log(segments);
   }, [user, segments]);
 
   const [fontsLoaded] = useFonts({
