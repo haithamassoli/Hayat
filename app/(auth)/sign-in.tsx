@@ -86,7 +86,12 @@ const SignIn = () => {
             title="تسجيل الدخول"
           />
           <TouchableOpacity onPress={() => router.push("sign-up")}>
-            <ReText marginTop="hm" marginHorizontal="hs" variant="BodySmall">
+            <ReText
+              marginTop="hm"
+              marginHorizontal="hs"
+              textAlign="left"
+              variant="BodySmall"
+            >
               ليس لديك حساب؟ سجل الآن
             </ReText>
           </TouchableOpacity>

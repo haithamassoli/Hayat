@@ -1,8 +1,8 @@
 import { Feather } from "@expo/vector-icons";
 import Colors from "@styles/colors";
 import { Box, ReText } from "@styles/theme";
-import { ms, vs } from "@utils/platform";
-import { Button } from "react-native-paper";
+import { hs, ms, vs } from "@utils/platform";
+import { Card } from "react-native-paper";
 
 const VideoButton = ({
   onPress,
@@ -13,17 +13,16 @@ const VideoButton = ({
 }: {
   onPress: () => void;
   title: string;
-  mode?: "text" | "outlined" | "contained" | "elevated" | "contained-tonal";
+  mode?: "outlined" | "contained" | "elevated";
   style?: any;
   duration: string;
 }) => {
   return (
-    <Button
+    <Card
       mode={mode}
       onPress={onPress}
       contentStyle={{
-        height: vs(48),
-        paddingTop: vs(4),
+        paddingHorizontal: hs(16),
       }}
       style={{
         ...style,
@@ -32,6 +31,7 @@ const VideoButton = ({
       <Box
         flexDirection="row"
         alignItems="center"
+        height={vs(48)}
         justifyContent="space-between"
         width="100%"
       >
@@ -41,7 +41,7 @@ const VideoButton = ({
         </Box>
         <ReText variant="LabelLarge">{duration}</ReText>
       </Box>
-    </Button>
+    </Card>
   );
 };
 

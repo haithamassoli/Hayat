@@ -100,9 +100,11 @@ const HomeScreen = () => {
           }}
         >
           {doctors.map((doctor) => (
-            <Box key={doctor.id} marginHorizontal="hs">
+            <Box key={doctor.uid} marginHorizontal="hs">
               <DoctorCard
-                onPress={() => {}}
+                onPress={() => {
+                  router.push(`/chats/${doctor.uid}`);
+                }}
                 name={doctor.name}
                 specialty={doctor.specialty}
               />

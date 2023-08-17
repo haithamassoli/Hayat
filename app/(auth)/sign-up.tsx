@@ -86,7 +86,12 @@ const SingUp = () => {
             title="تسجيل"
           />
           <TouchableOpacity onPress={() => router.push("sign-in")}>
-            <ReText marginTop="hm" marginHorizontal="hs" variant="BodySmall">
+            <ReText
+              marginTop="hm"
+              marginHorizontal="hs"
+              textAlign="left"
+              variant="BodySmall"
+            >
               لديك حساب؟ تسجيل الدخول
             </ReText>
           </TouchableOpacity>

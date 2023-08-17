@@ -1,41 +1,46 @@
-import { Box } from "@styles/theme";
+import { Box, ReText } from "@styles/theme";
+import { vs } from "@utils/platform";
 import { useStore } from "@zustand/store";
 import { useEffect, useState } from "react";
 import { Snackbar as PSnackbar } from "react-native-paper";
 
 const Snackbar = () => {
-  // const { snackbarText, setSnackbarText } = useStore((state) => state);
+  const { snackbarText } = useStore();
   const [visible, setVisible] = useState(false);
 
-  // useEffect(() => {
-  //   if (snackbarText) {
-  //     setVisible(true);
-  //   }
-  // }, [snackbarText]);
+  useEffect(() => {
+    if (snackbarText) {
+      setVisible(true);
+    }
+  }, [snackbarText]);
 
-  // const onDismiss = () => {
-  //   setVisible(false);
-  //   setSnackbarText("");
-  // };
+  const onDismiss = () => {
+    setVisible(false);
+    useStore.setState({ snackbarText: "" });
+  };
   return (
     <Box
       flex={1}
       position="absolute"
-      zIndex="overlay"
-      bottom={0}
+      zIndex="modal"
+      bottom={vs(24)}
       width={"100%"}
     >
       <PSnackbar
         visible={visible}
-        onDismiss={() => setVisible(false)}
-        // onDismiss={onDismiss}
+        onDismiss={onDismiss}
         duration={5000}
         action={{
-          label: "حسناً",
-          // onPress: onDismiss,
+          label: "حسنا",
+          onPress: onDismiss,
+        }}
+        style={{
+          height: vs(28),
         }}
       >
-        {/* {snackbarText} */}
+        <ReText variant="BodySmall" textAlign="left" color="mainBackground">
+          {snackbarText}
+        </ReText>
       </PSnackbar>
     </Box>
   );
