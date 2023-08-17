@@ -1,9 +1,5 @@
 export const official = [
   {
-    id: 2,
-    image: require("@assets/images/official/2.png"),
-  },
-  {
     id: 3,
     image: require("@assets/images/official/3.png"),
   },
@@ -14,5 +10,9 @@ export const official = [
   {
     id: 1,
     image: require("@assets/images/official/1.png"),
+  },
+  {
+    id: 2,
+    image: require("@assets/images/official/2.png"),
   },
 ];

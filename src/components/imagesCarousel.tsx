@@ -116,6 +116,8 @@ const ImagesCarousel = ({ images }: Props) => {
                     : colors.black6,
                 backgroundColor:
                   index === selectedIndex ? colors.secondary : colors.black6,
+                width:
+                  index === images.length - selectedIndex - 1 ? ms(24) : ms(8),
               },
             ]}
           />
@@ -150,8 +152,7 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   dot: {
-    height: vs(8),
-    width: vs(8),
+    height: ms(8),
     borderRadius: ms(6),
     borderWidth: ms(4),
     margin: ms(4),
