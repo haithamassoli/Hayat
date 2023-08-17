@@ -3,7 +3,7 @@ import Colors from "@styles/colors";
 import { IconSize } from "@styles/size";
 import { Box, ReText, Theme } from "@styles/theme";
 import { useRouter } from "expo-router";
-import { Button, TextInput } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { vs } from "@utils/platform";
@@ -27,7 +27,6 @@ const SignIn = () => {
   const { mutate, isLoading } = loginMutation();
 
   const onSubmit = (data: ValidationSchemaType) => {
-    console.log(data);
     mutate(data);
   };
 

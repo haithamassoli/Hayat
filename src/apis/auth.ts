@@ -20,11 +20,9 @@ export const loginMutation = () => {
   return useMutation({
     mutationFn: (data: ILoginData) => login(data.email, data.password),
     onSuccess: (data: any) => {
-      console.log("data", data);
       useStore.setState({ user: data, snackbarText: "تم تسجيل الدخول بنجاح" });
     },
     onError: (error: any) => {
-      console.log("error", error);
       useStore.setState({ snackbarText: error.message });
     },
   });
@@ -40,7 +38,6 @@ const login = async (email: string, password: string) => {
     await storeDataToStorage("user", user);
     return user;
   } catch (error: any) {
-    console.log(error.message);
     throw new Error(error.message);
   }
 };
@@ -49,7 +46,6 @@ export const registerMutation = () => {
   return useMutation({
     mutationFn: (data: ILoginData) => register(data.email, data.password),
     onSuccess: (data: any) => {
-      console.log("data", data);
       useStore.setState({
         user: data,
         snackbarText:
@@ -57,7 +53,6 @@ export const registerMutation = () => {
       });
     },
     onError: (error: any) => {
-      console.log("error", error);
       useStore.setState({ snackbarText: error.message });
     },
   });
@@ -91,7 +86,6 @@ export const logoutMutation = () => {
       useStore.setState({ snackbarText: "تم تسجيل الخروج بنجاح", user: null });
     },
     onError: (error: any) => {
-      console.log("error", error);
       useStore.setState({ snackbarText: error.message });
     },
   });
@@ -100,7 +94,6 @@ export const logout = async () => {
   try {
     await signOut(auth);
   } catch (error: any) {
-    console.log(error.message);
     throw new Error(error.message);
   } finally {
     await storeDataToStorage("user", null);
@@ -122,7 +115,6 @@ const getUserByUid = async (uid: string) => {
     });
     return user;
   } catch (error: any) {
-    console.log(error.message);
     throw new Error(error.message);
   }
 };

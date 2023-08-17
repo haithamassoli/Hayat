@@ -67,7 +67,9 @@ const Category = () => {
             <VideoButton
               key={index.toString()}
               title={`1. ${video.title}`}
-              onPress={() => router.push(`/videos/${video.title}`)}
+              onPress={() =>
+                router.push(`/videos/${id}?videoTitle=${video.title}`)
+              }
               duration={video.duration}
             />
           ))}

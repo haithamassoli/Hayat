@@ -15,6 +15,18 @@ export const validationSchema = z.object({
 
 export type ValidationSchemaType = z.infer<typeof validationSchema>;
 
+export const validationCommentSchema = z.object({
+  comment: z
+    .string({
+      required_error: "التعليق يجب أن لا يكون فارغًا",
+    })
+    .min(4, "التعليق يجب أن يكون 4 أحرف على الأقل"),
+});
+
+export type validationCommentSchemaType = z.infer<
+  typeof validationCommentSchema
+>;
+
 export interface IUser {
   apiKey: string;
   appName: string;
