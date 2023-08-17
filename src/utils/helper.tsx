@@ -1,5 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Dimensions } from "react-native";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ar";
+
+dayjs.extend(relativeTime);
+dayjs.locale("ar");
 
 export const { width, height } = Dimensions.get("window");
 
@@ -27,4 +33,8 @@ export const deleteStorage = async (key: string) => {
 
 export const rtlWebview = (html: string) => {
   return `<html dir="rtl" lang="ar"><body>${html}</body></html>`;
+};
+
+export const dateFromNow = (date: Date) => {
+  return dayjs(date).fromNow();
 };
