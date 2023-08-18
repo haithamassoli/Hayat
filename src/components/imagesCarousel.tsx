@@ -1,20 +1,13 @@
 import { useState, useRef, memo } from "react";
-import {
-  View,
-  ScrollView,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { useEffect } from "react";
 import { useTheme } from "@shopify/restyle";
 import Colors from "@styles/colors";
-import { Shadow } from "react-native-shadow-2";
 import { hs, ms, vs } from "@utils/platform";
 import { Theme } from "@styles/theme";
 import { useStore } from "@zustand/store";
-import { height, width } from "@utils/helper";
+import { blurhash, height, width } from "@utils/helper";
+import { Image } from "expo-image";
 
 type Props = {
   images: any[];
@@ -50,49 +43,41 @@ const ImagesCarousel = ({ images }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Shadow
-        distance={8}
-        stretch
-        startColor={colors.shadow}
-        endColor="rgba(0, 0, 0, 0)"
-        style={styles.shadow}
+      <ScrollView
+        ref={scrollRef}
+        contentContainerStyle={{
+          flexDirection: "row-reverse",
+          borderRadius: ms(12),
+          width: width - hs(32),
+          height: height * 0.24,
+        }}
+        horizontal
+        overScrollMode="never"
+        showsHorizontalScrollIndicator={false}
+        onMomentumScrollEnd={setImageIndex}
+        pagingEnabled
       >
-        <ScrollView
-          ref={scrollRef}
-          contentContainerStyle={{
-            flexDirection: "row-reverse",
-          }}
-          horizontal
-          overScrollMode="never"
-          showsHorizontalScrollIndicator={false}
-          onMomentumScrollEnd={setImageIndex}
-          pagingEnabled
-        >
-          {images.length === 0 && (
+        {images.length === 0 && (
+          <Image
+            source={require("@assets/images/carousel/1.png")}
+            contentFit="cover"
+            placeholder={blurhash}
+            transition={400}
+            style={styles.image}
+          />
+        )}
+        {Array.isArray(images) &&
+          images.map((image, index) => (
             <Image
-              source={require("@assets/images/carousel/1.png")}
+              key={index}
+              source={image}
+              transition={400}
+              placeholder={blurhash}
+              placeholderContentFit="cover"
               style={styles.image}
             />
-          )}
-          {images.map((image, index) => (
-            <TouchableOpacity
-              onPress={() => {
-                if (image.url) {
-                  Linking.openURL(image?.url);
-                }
-              }}
-              key={index}
-              activeOpacity={image.url ? 0.5 : 1}
-            >
-              <Image
-                source={image}
-                defaultSource={require("@assets/images/carousel/1.png")}
-                style={styles.image}
-              />
-            </TouchableOpacity>
           ))}
-        </ScrollView>
-      </Shadow>
+      </ScrollView>
       <View style={styles.dotsContainer}>
         {images.length === 0 && (
           <View
@@ -134,13 +119,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: vs(232),
   },
-  shadow: {
-    borderRadius: ms(12),
-    width: width - hs(32),
-    height: height * 0.24,
-  },
   image: {
-    resizeMode: "cover",
     borderRadius: ms(12),
     width: width - hs(32),
     height: height * 0.24,

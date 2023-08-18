@@ -145,6 +145,7 @@ const ChatScreen = () => {
                 backgroundColor: colors.surface,
                 borderTopColor: colors.tertiaryContainer,
                 borderTopWidth: 1,
+                paddingBottom: vs(8),
               }}
             />
           );
@@ -166,6 +167,9 @@ const ChatScreen = () => {
               />
             </Send>
           );
+        }}
+        messagesContainerStyle={{
+          paddingBottom: vs(8),
         }}
         textInputProps={{
           placeholder: "اكتب رسالة",

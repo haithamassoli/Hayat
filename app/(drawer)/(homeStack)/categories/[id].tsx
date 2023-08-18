@@ -4,9 +4,11 @@ import VideoButton from "@components/ui/videoButton";
 import { Feather } from "@expo/vector-icons";
 import Colors from "@styles/colors";
 import { Box, ReText } from "@styles/theme";
+import { blurhash } from "@utils/helper";
 import { hs, ms, vs } from "@utils/platform";
+import { Image } from "expo-image";
 import { Stack, useRouter, useSearchParams } from "expo-router";
-import { Image, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Category = () => {
@@ -48,6 +50,10 @@ const Category = () => {
       <Image
         source={require("@assets/images/family.png")}
         style={{ width: "100%", height: vs(274) }}
+        contentFit="cover"
+        placeholder={blurhash}
+        placeholderContentFit="cover"
+        transition={400}
       />
       <Box marginHorizontal="hm">
         <ReText

@@ -15,8 +15,8 @@ export const LightNavigationColors = {
 export const DarkNavigationColors = {
   colors: {
     background: Colors.darkBackground,
-    border: "rgb(39, 39, 41)",
-    card: "rgb(18, 18, 18)",
+    border: Colors.darkBackground,
+    card: Colors.darkBackground,
     notification: "rgb(255, 69, 58)",
     primary: Colors.primary,
     text: Colors.lightText,

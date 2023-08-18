@@ -9,15 +9,19 @@ import { useTheme } from "@shopify/restyle";
 import { doctors } from "@src/data/doctors";
 import { official } from "@src/data/official";
 import { Box, ReText, Theme } from "@styles/theme";
+import { blurhash } from "@utils/helper";
 import { hs, ms, vs } from "@utils/platform";
+import { useStore } from "@zustand/store";
+import { Image } from "expo-image";
 import { useNavigation, useRouter } from "expo-router";
-import { Image, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
   const navigation: any = useNavigation();
   const { colors } = useTheme<Theme>();
   const router = useRouter();
+  const { isDark } = useStore();
   const { isLoading, data: categories } = fetchCategoriesQuery();
 
   if (isLoading) return <Loading />;
@@ -36,7 +40,16 @@ const HomeScreen = () => {
           <Box flexDirection="row" alignItems="center">
             <Image
               source={require("@assets/images/logo.png")}
-              style={{ width: hs(69), resizeMode: "contain" }}
+              style={{
+                width: isDark ? ms(49) : ms(69),
+                height: isDark ? ms(49) : ms(69),
+                backgroundColor: isDark ? colors.ternary : "transparent",
+                borderRadius: isDark ? ms(34) : 0,
+              }}
+              contentFit="contain"
+              placeholder={blurhash}
+              placeholderContentFit="contain"
+              transition={400}
             />
           </Box>
           <Box flexDirection="row" alignItems="center" gap="hm">
@@ -51,8 +64,8 @@ const HomeScreen = () => {
         <Box marginTop="vm">
           <ImagesCarousel
             images={[
-              require("@assets/images/carousel/1.png"),
               require("@assets/images/carousel/2.png"),
+              require("@assets/images/carousel/1.png"),
             ]}
           />
         </Box>
@@ -132,7 +145,10 @@ const HomeScreen = () => {
             <Image
               key={official.id}
               source={official.image}
-              resizeMode="contain"
+              contentFit="contain"
+              placeholder={blurhash}
+              placeholderContentFit="contain"
+              transition={400}
               style={{
                 width: ms(100),
                 height: vs(100),
