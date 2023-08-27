@@ -14,8 +14,9 @@ import { hs, ms, vs } from "@utils/platform";
 import { useStore } from "@zustand/store";
 import { Image } from "expo-image";
 import { useNavigation, useRouter } from "expo-router";
-import { ScrollView } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Animated, { FadeInUp } from "react-native-reanimated";
 
 const HomeScreen = () => {
   const navigation: any = useNavigation();
@@ -30,54 +31,55 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <Snackbar />
       <ScrollView style={{ flex: 1 }}>
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          marginEnd="hm"
-          height={60}
-        >
-          <Box flexDirection="row" alignItems="center">
-            <Image
-              source={require("@assets/images/logo.png")}
-              style={{
-                width: isDark ? ms(49) : ms(69),
-                height: isDark ? ms(49) : ms(69),
-                backgroundColor: isDark ? colors.ternary : "transparent",
-                borderRadius: isDark ? ms(34) : 0,
-              }}
-              contentFit="contain"
-              placeholder={blurhash}
-              placeholderContentFit="contain"
-              transition={400}
-            />
+        <Animated.View entering={FadeInUp.duration(600)}>
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginEnd="hm"
+            height={60}
+          >
+            <Box flexDirection="row" alignItems="center">
+              <Image
+                source={require("@assets/images/logo.png")}
+                style={{
+                  width: isDark ? ms(49) : ms(69),
+                  height: isDark ? ms(49) : ms(69),
+                  backgroundColor: isDark ? colors.ternary : "transparent",
+                  borderRadius: isDark ? ms(34) : 0,
+                }}
+                contentFit="contain"
+                transition={400}
+              />
+            </Box>
+            <Box flexDirection="row" alignItems="center" gap="hm">
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                <Feather name="menu" size={hs(24)} color={colors.text} />
+              </TouchableOpacity>
+            </Box>
           </Box>
-          <Box flexDirection="row" alignItems="center" gap="hm">
-            <Feather
-              name="menu"
-              size={hs(24)}
-              color={colors.text}
-              onPress={() => navigation.openDrawer()}
-            />
-          </Box>
-        </Box>
+        </Animated.View>
         <Box marginTop="vm">
-          <ImagesCarousel
-            images={[
-              require("@assets/images/carousel/2.png"),
-              require("@assets/images/carousel/1.png"),
-            ]}
-          />
+          <Animated.View entering={FadeInUp.duration(600).delay(200)}>
+            <ImagesCarousel
+              images={[
+                require("@assets/images/carousel/2.png"),
+                require("@assets/images/carousel/2.png"),
+              ]}
+            />
+          </Animated.View>
         </Box>
-        <ReText
-          variant="HeadlineMedium"
-          fontFamily="CairoBold"
-          marginStart="hm"
-          textAlign="left"
-          color="ternary"
-        >
-          المواضيع الأساسية
-        </ReText>
+        <Animated.View entering={FadeInUp.duration(600).delay(400)}>
+          <ReText
+            variant="HeadlineMedium"
+            fontFamily="CairoBold"
+            marginStart="hm"
+            textAlign="left"
+            color="ternary"
+          >
+            المواضيع الأساسية
+          </ReText>
+        </Animated.View>
         <ScrollView
           horizontal
           overScrollMode="never"
@@ -88,22 +90,26 @@ const HomeScreen = () => {
         >
           {categories?.map((category) => (
             <Box key={category.id} marginHorizontal="hs">
-              <CategoryCard
-                onPress={() => router.push(`/categories/${category.route}`)}
-                title={category.title}
-              />
+              <Animated.View entering={FadeInUp.duration(600).delay(600)}>
+                <CategoryCard
+                  onPress={() => router.push(`/categories/${category.route}`)}
+                  title={category.title}
+                />
+              </Animated.View>
             </Box>
           ))}
         </ScrollView>
-        <ReText
-          variant="HeadlineMedium"
-          fontFamily="CairoBold"
-          marginStart="hm"
-          textAlign="left"
-          color="ternary"
-        >
-          المرشدون
-        </ReText>
+        <Animated.View entering={FadeInUp.duration(600).delay(800)}>
+          <ReText
+            variant="HeadlineMedium"
+            fontFamily="CairoBold"
+            marginStart="hm"
+            textAlign="left"
+            color="ternary"
+          >
+            المرشدون
+          </ReText>
+        </Animated.View>
         <ScrollView
           horizontal
           overScrollMode="never"
@@ -114,25 +120,29 @@ const HomeScreen = () => {
         >
           {doctors.map((doctor) => (
             <Box key={doctor.uid} marginHorizontal="hs">
-              <DoctorCard
-                onPress={() => {
-                  router.push(`/chats/${doctor.uid}`);
-                }}
-                name={doctor.name}
-                specialty={doctor.specialty}
-              />
+              <Animated.View entering={FadeInUp.duration(600).delay(1000)}>
+                <DoctorCard
+                  onPress={() => {
+                    router.push(`/chats/${doctor.uid}`);
+                  }}
+                  name={doctor.name}
+                  specialty={doctor.specialty}
+                />
+              </Animated.View>
             </Box>
           ))}
         </ScrollView>
-        <ReText
-          variant="HeadlineMedium"
-          fontFamily="CairoBold"
-          marginStart="hm"
-          textAlign="left"
-          color="ternary"
-        >
-          الجهات المشرفة
-        </ReText>
+        <Animated.View entering={FadeInUp.duration(600).delay(1200)}>
+          <ReText
+            variant="HeadlineMedium"
+            fontFamily="CairoBold"
+            marginStart="hm"
+            textAlign="left"
+            color="ternary"
+          >
+            الجهات المشرفة
+          </ReText>
+        </Animated.View>
         <ScrollView
           horizontal
           overScrollMode="never"
@@ -142,19 +152,23 @@ const HomeScreen = () => {
           }}
         >
           {official.map((official) => (
-            <Image
+            <Animated.View
               key={official.id}
-              source={official.image}
-              contentFit="contain"
-              placeholder={blurhash}
-              placeholderContentFit="contain"
-              transition={400}
-              style={{
-                width: ms(100),
-                height: vs(100),
-                marginHorizontal: hs(8),
-              }}
-            />
+              entering={FadeInUp.duration(600).delay(1400)}
+            >
+              <Image
+                source={official.image}
+                contentFit="contain"
+                placeholder={blurhash}
+                placeholderContentFit="contain"
+                transition={400}
+                style={{
+                  width: ms(100),
+                  height: vs(100),
+                  marginHorizontal: hs(8),
+                }}
+              />
+            </Animated.View>
           ))}
         </ScrollView>
       </ScrollView>

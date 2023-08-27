@@ -7,13 +7,14 @@ import { Box, ReText } from "@styles/theme";
 import { blurhash } from "@utils/helper";
 import { hs, ms, vs } from "@utils/platform";
 import { Image } from "expo-image";
-import { Stack, useRouter, useSearchParams } from "expo-router";
+import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Animated, { FadeInUp } from "react-native-reanimated";
 
 const Category = () => {
   const router = useRouter();
-  const { id }: { id?: string } = useSearchParams();
+  const { id }: { id?: string } = useLocalSearchParams();
   const { isLoading, data: categories } = fetchCategoriesQuery();
 
   categories?.filter((category) => category.route === id);
@@ -56,26 +57,32 @@ const Category = () => {
         transition={400}
       />
       <Box marginHorizontal="hm">
-        <ReText
-          variant="HeadlineMedium"
-          fontFamily="CairoBold"
-          textAlign="left"
-          color="ternary"
-          marginTop="vs"
-        >
-          المحاضرات التربوية
-        </ReText>
+        <Animated.View entering={FadeInUp.duration(600)}>
+          <ReText
+            variant="HeadlineMedium"
+            fontFamily="CairoBold"
+            textAlign="left"
+            color="ternary"
+            marginTop="vs"
+          >
+            المحاضرات التربوية
+          </ReText>
+        </Animated.View>
         <Box gap="vm">
           {Array.isArray(categories) &&
             categories[0].videos?.map((video: Video, index: number) => (
-              <VideoButton
+              <Animated.View
                 key={index.toString()}
-                title={`1. ${video.title}`}
-                onPress={() =>
-                  router.push(`/videos/${id}?videoTitle=${video.title}`)
-                }
-                duration={video.duration}
-              />
+                entering={FadeInUp.duration(600).delay(200 * index)}
+              >
+                <VideoButton
+                  title={`1. ${video.title}`}
+                  onPress={() =>
+                    router.push(`/videos/${id}?videoTitle=${video.title}`)
+                  }
+                  duration={video.duration}
+                />
+              </Animated.View>
             ))}
         </Box>
       </Box>

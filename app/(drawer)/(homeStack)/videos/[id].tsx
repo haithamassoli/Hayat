@@ -1,5 +1,5 @@
 import { Box, ReText } from "@styles/theme";
-import { useRouter, useSearchParams } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { Video, ResizeMode } from "expo-av";
 import { useRef, useState } from "react";
 import InfoCard from "@components/infoCard";
@@ -27,11 +27,12 @@ import {
 } from "@apis/categories";
 import Loading from "@components/loading";
 import { getUserByIdQuery } from "@apis/auth";
+import Animated, { FadeInUp } from "react-native-reanimated";
 
 const VideoScreen = () => {
   const router = useRouter();
   const { id, videoTitle }: { id?: string; videoTitle?: string } =
-    useSearchParams();
+    useLocalSearchParams();
   const video = useRef(null);
   const { user } = useStore();
   const [status, setStatus] = useState({});
@@ -89,57 +90,70 @@ const VideoScreen = () => {
           paddingBottom: vs(16),
         }}
       >
-        <Header title={data?.title!} />
-        <Video
-          ref={video}
-          style={{
-            width: "100%",
-            aspectRatio: 16 / 9,
-          }}
-          source={{
-            uri: data?.url!,
-          }}
-          useNativeControls
-          resizeMode={ResizeMode.CONTAIN}
-          onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-        />
-        <Box flex={1} marginHorizontal="hm" gap="vm" marginTop="vm">
-          <InfoCard
-            name={doctorData?.name}
-            specialty={doctorData?.specialty}
-            onPress={() => router.push(`/chats/${data?.doctor}`)}
+        <Animated.View entering={FadeInUp.duration(600)}>
+          <Header title={data?.title!} />
+        </Animated.View>
+        <Animated.View entering={FadeInUp.duration(600).delay(200)}>
+          <Video
+            ref={video}
+            style={{
+              width: "100%",
+              aspectRatio: 16 / 9,
+            }}
+            source={{
+              uri: data?.url!,
+            }}
+            useNativeControls
+            resizeMode={ResizeMode.CONTAIN}
+            onPlaybackStatusUpdate={(status) => setStatus(() => status)}
           />
-          <Divider bold />
-          <Box
-            flexDirection="row"
-            justifyContent="space-between"
-            marginHorizontal="hm"
-          >
-            <Feather name="share-2" size={ms(24)} color={Colors.secondary} />
-            <Box flexDirection="row" gap="hm">
-              <MaterialCommunityIcons
-                name="thumb-down-outline"
-                size={ms(26)}
-                color={Colors.secondary}
-              />
-              <MaterialCommunityIcons
-                name="thumb-up-outline"
-                size={ms(26)}
-                color={Colors.secondary}
-              />
+        </Animated.View>
+        <Box flex={1} marginHorizontal="hm" gap="vm" marginTop="vm">
+          <Animated.View entering={FadeInUp.duration(600).delay(400)}>
+            <InfoCard
+              name={doctorData?.name}
+              specialty={doctorData?.specialty}
+              onPress={() => router.push(`/chats/${data?.doctor}`)}
+            />
+          </Animated.View>
+          <Animated.View entering={FadeInUp.duration(600).delay(600)}>
+            <Divider bold />
+          </Animated.View>
+          <Animated.View entering={FadeInUp.duration(600).delay(600)}>
+            <Box
+              flexDirection="row"
+              justifyContent="space-between"
+              marginHorizontal="hm"
+            >
+              <Feather name="share-2" size={ms(24)} color={Colors.secondary} />
+              <Box flexDirection="row" gap="hm">
+                <MaterialCommunityIcons
+                  name="thumb-down-outline"
+                  size={ms(26)}
+                  color={Colors.secondary}
+                />
+                <MaterialCommunityIcons
+                  name="thumb-up-outline"
+                  size={ms(26)}
+                  color={Colors.secondary}
+                />
+              </Box>
             </Box>
-          </Box>
-          <Divider bold />
-          <ReText variant="HeadlineMedium" textAlign="left">
-            التعليقات
-          </ReText>
-          <Box height={vs(16)} />
+          </Animated.View>
+          <Animated.View entering={FadeInUp.duration(600).delay(600)}>
+            <Divider bold />
+          </Animated.View>
+          <Animated.View entering={FadeInUp.duration(600).delay(800)}>
+            <ReText variant="HeadlineMedium" textAlign="left">
+              التعليقات
+            </ReText>
+          </Animated.View>
           {isLoadingComment && (
             <Box height={vs(24)} justifyContent="center" alignItems="center">
               <Loading size="small" />
             </Box>
           )}
-          <Box>
+          <Animated.View entering={FadeInUp.duration(600).delay(1000)}>
             <ControlledInput
               name="comment"
               control={control}
@@ -154,10 +168,16 @@ const VideoScreen = () => {
                 />
               }
             />
-          </Box>
+          </Animated.View>
           {Array.isArray(data?.comments) && data?.comments.length! > 0 ? (
             data?.comments?.map((comment, index) => (
-              <Box key={index} marginBottom="hm">
+              <Animated.View
+                key={index}
+                entering={FadeInUp.duration(600).delay(index * 200 + 1200)}
+                style={{
+                  marginBottom: vs(16),
+                }}
+              >
                 <Box flexDirection="row" gap="hs">
                   <Avatar.Icon
                     icon="account"
@@ -186,12 +206,14 @@ const VideoScreen = () => {
                     </ReText>
                   </Box>
                 </Box>
-              </Box>
+              </Animated.View>
             ))
           ) : (
-            <ReText variant="BodyMedium" textAlign="center" marginStart="hm">
-              لا يوجد تعليقات
-            </ReText>
+            <Animated.View entering={FadeInUp.duration(600).delay(1200)}>
+              <ReText variant="BodyMedium" textAlign="center" marginStart="hm">
+                لا يوجد تعليقات
+              </ReText>
+            </Animated.View>
           )}
         </Box>
       </ScrollView>

@@ -7,7 +7,7 @@ import { Feather } from "@expo/vector-icons";
 import { db } from "@src/firebase.config";
 import { vs } from "@utils/platform";
 import { useStore } from "@zustand/store";
-import { useSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import {
   collection,
   onSnapshot,
@@ -24,6 +24,7 @@ import {
 } from "react-native-gifted-chat";
 import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Animated, { FadeInUp } from "react-native-reanimated";
 
 type Message = {
   _id: number;
@@ -35,7 +36,7 @@ type Message = {
 };
 
 const ChatScreen = () => {
-  const { id }: { id?: string } = useSearchParams();
+  const { id }: { id?: string } = useLocalSearchParams();
   const { colors } = useTheme();
   const { user } = useStore();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -101,84 +102,91 @@ const ChatScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Header title={doctorData?.name} />
+      <Animated.View entering={FadeInUp.duration(600)}>
+        <Header title={doctorData?.name} />
+      </Animated.View>
       <Snackbar />
-      <GiftedChat
-        messages={messages}
-        onSend={(messages: any) => onSend(messages)}
-        showAvatarForEveryMessage={false}
-        showUserAvatar={false}
-        renderAvatar={() => null}
-        alwaysShowSend
-        renderBubble={(props) => {
-          return (
-            <Bubble
-              {...props}
-              textStyle={{
-                right: {
-                  color: colors.onTertiaryContainer,
-                },
-                left: {
-                  color: colors.onSecondaryContainer,
-                },
-              }}
-              wrapperStyle={{
-                right: {
-                  backgroundColor: colors.tertiaryContainer,
-                },
-                left: {
-                  backgroundColor: colors.secondaryContainer,
-                },
-              }}
-            />
-          );
-        }}
-        timeTextStyle={{
-          right: { color: colors.onTertiaryContainer },
-          left: { color: colors.onSecondaryContainer },
-        }}
-        renderInputToolbar={(props) => {
-          return (
-            <InputToolbar
-              {...props}
-              containerStyle={{
-                backgroundColor: colors.surface,
-                borderTopColor: colors.tertiaryContainer,
-                borderTopWidth: 1,
-                paddingBottom: vs(8),
-              }}
-            />
-          );
-        }}
-        renderSend={(props) => {
-          return (
-            <Send
-              textStyle={{
-                color: colors.primary,
-                fontFamily: "CairoBold",
-              }}
-              {...props}
-            >
-              <Feather
-                name="send"
-                size={vs(24)}
-                color={colors.primary}
-                style={{ marginHorizontal: vs(8) }}
+      <Animated.View
+        style={{ flex: 1 }}
+        entering={FadeInUp.duration(600).delay(200)}
+      >
+        <GiftedChat
+          messages={messages}
+          onSend={(messages: any) => onSend(messages)}
+          showAvatarForEveryMessage={false}
+          showUserAvatar={false}
+          renderAvatar={() => null}
+          alwaysShowSend
+          renderBubble={(props) => {
+            return (
+              <Bubble
+                {...props}
+                textStyle={{
+                  right: {
+                    color: colors.onTertiaryContainer,
+                  },
+                  left: {
+                    color: colors.onSecondaryContainer,
+                  },
+                }}
+                wrapperStyle={{
+                  right: {
+                    backgroundColor: colors.tertiaryContainer,
+                  },
+                  left: {
+                    backgroundColor: colors.secondaryContainer,
+                  },
+                }}
               />
-            </Send>
-          );
-        }}
-        messagesContainerStyle={{
-          paddingBottom: vs(8),
-        }}
-        textInputProps={{
-          placeholder: "اكتب رسالة",
-          textAlign: "right",
-        }}
-        user={{
-          _id: user?.uid!,
-        }}
-      />
+            );
+          }}
+          timeTextStyle={{
+            right: { color: colors.onTertiaryContainer },
+            left: { color: colors.onSecondaryContainer },
+          }}
+          renderInputToolbar={(props) => {
+            return (
+              <InputToolbar
+                {...props}
+                containerStyle={{
+                  backgroundColor: colors.surface,
+                  borderTopColor: colors.tertiaryContainer,
+                  borderTopWidth: 1,
+                  paddingBottom: vs(8),
+                }}
+              />
+            );
+          }}
+          renderSend={(props) => {
+            return (
+              <Send
+                textStyle={{
+                  color: colors.primary,
+                  fontFamily: "CairoBold",
+                }}
+                {...props}
+              >
+                <Feather
+                  name="send"
+                  size={vs(24)}
+                  color={colors.primary}
+                  style={{ marginHorizontal: vs(8) }}
+                />
+              </Send>
+            );
+          }}
+          messagesContainerStyle={{
+            paddingBottom: vs(8),
+          }}
+          textInputProps={{
+            placeholder: "اكتب رسالة",
+            textAlign: "right",
+          }}
+          user={{
+            _id: user?.uid!,
+          }}
+        />
+      </Animated.View>
     </SafeAreaView>
   );
 };
