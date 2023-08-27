@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useTheme } from "@shopify/restyle";
 import Colors from "@styles/colors";
 import { hs, ms, vs } from "@utils/platform";
-import { Theme } from "@styles/theme";
+import { Box, Theme } from "@styles/theme";
 import { useStore } from "@zustand/store";
 import { blurhash, height, width } from "@utils/helper";
 import { Image } from "expo-image";
@@ -43,41 +43,40 @@ const ImagesCarousel = ({ images }: Props) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        ref={scrollRef}
-        contentContainerStyle={{
-          flexDirection: "row-reverse",
-          borderRadius: ms(12),
-          width: width - hs(32),
-          height: height * 0.24,
-        }}
-        horizontal
-        overScrollMode="never"
-        showsHorizontalScrollIndicator={false}
-        onMomentumScrollEnd={setImageIndex}
-        pagingEnabled
-      >
-        {images.length === 0 && (
-          <Image
-            source={require("@assets/images/carousel/1.png")}
-            contentFit="cover"
-            placeholder={blurhash}
-            transition={400}
-            style={styles.image}
-          />
-        )}
-        {Array.isArray(images) &&
-          images.map((image, index) => (
+      <Box width={width - hs(32)} borderRadius="l" aspectRatio={68 / 39}>
+        <ScrollView
+          ref={scrollRef}
+          contentContainerStyle={{
+            flexDirection: "row-reverse",
+          }}
+          horizontal
+          overScrollMode="never"
+          showsHorizontalScrollIndicator={false}
+          onMomentumScrollEnd={setImageIndex}
+          pagingEnabled
+        >
+          {images.length === 0 && (
             <Image
-              key={index}
-              source={image}
-              transition={400}
+              source={require("@assets/images/carousel/2.png")}
+              contentFit="cover"
               placeholder={blurhash}
-              placeholderContentFit="cover"
+              transition={400}
               style={styles.image}
             />
-          ))}
-      </ScrollView>
+          )}
+          {Array.isArray(images) &&
+            images.map((image, index) => (
+              <Image
+                key={index}
+                source={image}
+                transition={400}
+                placeholder={blurhash}
+                placeholderContentFit="cover"
+                style={styles.image}
+              />
+            ))}
+        </ScrollView>
+      </Box>
       <View style={styles.dotsContainer}>
         {images.length === 0 && (
           <View
