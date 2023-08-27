@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider as ReThemeProvider } from "@shopify/restyle";
 import { StatusBar } from "expo-status-bar";
 import { useStore } from "@zustand/store";
-import { reloadAsync } from "expo-updates";
+import * as Updates from "expo-updates";
 import { useFonts } from "expo-font";
 import { FlashList } from "@shopify/flash-list";
 import {
@@ -69,7 +69,7 @@ const forceRTL = async () => {
     try {
       I18nManager.allowRTL(true);
       I18nManager.forceRTL(true);
-      await reloadAsync();
+      await Updates.reloadAsync();
     } catch (error) {
       console.log(error);
     }
@@ -121,10 +121,24 @@ export default function RootLayout() {
 
   const { isDark, user } = useStore((state) => state);
 
+  const onFetchUpdateAsync = async () => {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        await Updates.reloadAsync();
+      }
+    } catch (error) {
+      // You can also add an alert() to see the error message in case of an error when fetching updates.
+      console.log(`Error fetching latest Expo update: ${error}`);
+    }
+  };
+
   useEffect(() => {
     forceRTL();
     getUserFromStorage();
     getTheme();
+    onFetchUpdateAsync();
   }, []);
 
   useEffect(() => {
