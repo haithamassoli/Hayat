@@ -5,7 +5,7 @@ import Loading from "@components/loading";
 import Snackbar from "@components/snackbar";
 import { Feather } from "@expo/vector-icons";
 import { db } from "@src/firebase.config";
-import { vs } from "@utils/platform";
+import { ms, vs } from "@utils/platform";
 import { useStore } from "@zustand/store";
 import { useLocalSearchParams } from "expo-router";
 import {
@@ -124,17 +124,21 @@ const ChatScreen = () => {
                 textStyle={{
                   right: {
                     color: colors.onTertiaryContainer,
+                    fontSize: ms(12),
                   },
                   left: {
                     color: colors.onSecondaryContainer,
+                    fontSize: ms(12),
                   },
                 }}
                 wrapperStyle={{
                   right: {
                     backgroundColor: colors.tertiaryContainer,
+                    minHeight: vs(40),
                   },
                   left: {
                     backgroundColor: colors.secondaryContainer,
+                    minHeight: vs(40),
                   },
                 }}
               />

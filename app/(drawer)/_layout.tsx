@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import CustomDrawer from "@src/layouts/custom-drawer";
+import { IconSize } from "@styles/size";
 import { ms } from "@utils/platform";
 import { Drawer } from "expo-router/drawer";
 
@@ -25,8 +26,8 @@ const HomeDrawer = () => {
         options={{
           title: "الرئيسة",
           headerShown: false,
-          drawerIcon: ({ color, size }) => (
-            <Feather name="home" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="home" size={IconSize.m} color={color} />
           ),
         }}
       />
@@ -34,8 +35,8 @@ const HomeDrawer = () => {
         name="notifications"
         options={{
           title: "الإشعارات",
-          drawerIcon: ({ color, size }) => (
-            <Feather name="bell" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="bell" size={IconSize.m} color={color} />
           ),
         }}
       />
@@ -50,8 +51,8 @@ const HomeDrawer = () => {
         name="contact"
         options={{
           title: "تواصل معنا",
-          drawerIcon: ({ color, size }) => (
-            <Feather name="mail" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="mail" size={IconSize.m} color={color} />
           ),
         }}
       />
@@ -59,8 +60,8 @@ const HomeDrawer = () => {
         name="about"
         options={{
           title: "عن تطبيق حياة",
-          drawerIcon: ({ color, size }) => (
-            <Feather name="info" size={size} color={color} />
+          drawerIcon: ({ color }) => (
+            <Feather name="info" size={IconSize.m} color={color} />
           ),
         }}
       />

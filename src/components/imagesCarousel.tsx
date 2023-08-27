@@ -116,12 +116,13 @@ export default memo(ImagesCarousel);
 const styles = StyleSheet.create({
   container: {
     alignSelf: "center",
-    height: vs(232),
+    width: width - hs(32),
+    aspectRatio: 68 / 39,
   },
   image: {
     borderRadius: ms(12),
     width: width - hs(32),
-    height: height * 0.24,
+    aspectRatio: 68 / 39,
   },
   dotsContainer: {
     flexDirection: "row",

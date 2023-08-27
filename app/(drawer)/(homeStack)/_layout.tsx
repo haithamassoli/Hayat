@@ -1,3 +1,4 @@
+import { ms } from "@utils/platform";
 import { Stack } from "expo-router";
 
 const HomeStack = () => {
@@ -10,6 +11,7 @@ const HomeStack = () => {
         headerShown: false,
         headerTitleStyle: {
           fontFamily: "CairoBold",
+          fontSize: ms(16),
         },
       }}
     >

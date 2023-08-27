@@ -34,9 +34,6 @@ const Snackbar = () => {
           label: "حسنا",
           onPress: onDismiss,
         }}
-        style={{
-          height: vs(28),
-        }}
       >
         <ReText variant="BodySmall" textAlign="left" color="mainBackground">
           {snackbarText}
