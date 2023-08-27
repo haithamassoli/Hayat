@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "931682740672",
+    "project_id": "hayat-jo",
+    "storage_bucket": "hayat-jo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931682740672:android:ee1d01b2eb8e18e0d4c025",
+        "android_client_info": {
+          "package_name": "com.haithamassoli.hayat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "931682740672-ntjke6ff74smt82i5q4id66g8j25vj20.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.haithamassoli.hayat",
+            "certificate_hash": "903bcd201970f45c724952bfdb43ca25d7b678c3"
+          }
+        },
+        {
+          "client_id": "931682740672-r8vfgicg1inbo85etpaqiv246k5ti9cq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuimu9HJqY-AtyLUPCvXC0eKyT02jQpNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "931682740672-76d20mpc0r41fmrv0fs1autop9912f9t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

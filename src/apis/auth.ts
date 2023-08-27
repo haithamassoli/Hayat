@@ -6,6 +6,8 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   sendEmailVerification,
+  GoogleAuthProvider,
+  signInWithCredential,
 } from "firebase/auth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { db } from "@src/firebase.config";
@@ -113,6 +115,50 @@ const getUserByUid = async (uid: string) => {
     querySnapshot.forEach((doc) => {
       user = { ...doc.data(), id: doc.id };
     });
+    return user;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export const googleLoginMutation = () => {
+  return useMutation({
+    mutationFn: (token: string) => googleLogin(token),
+    onSuccess: (data: any) => {
+      useStore.setState({
+        user: data,
+        snackbarText: "تم تسجيل الدخول بنجاح",
+      });
+    },
+    onError: (error: any) => {
+      useStore.setState({ snackbarText: error.message });
+    },
+  });
+};
+
+const googleLogin = async (token: string) => {
+  try {
+    let isInDB = false;
+    const credential = GoogleAuthProvider.credential(token);
+    const userCredential = await signInWithCredential(auth, credential);
+    const user = userCredential.user;
+    const userRef = collection(db, "users");
+    const querySnapshot = await getDocs(
+      query(userRef, where("uid", "==", user.uid))
+    );
+    querySnapshot.forEach((doc) => {
+      if (doc.data()) {
+        isInDB = true;
+      }
+    });
+    if (!isInDB) {
+      await addDoc(collection(db, "users"), {
+        email: user.email,
+        uid: user.uid,
+        createdAt: new Date(),
+      });
+    }
+    await storeDataToStorage("user", user);
     return user;
   } catch (error: any) {
     throw new Error(error.message);

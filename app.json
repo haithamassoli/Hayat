@@ -14,7 +14,8 @@
       "backgroundColor": "#A8DADC"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/0b7297c7-a0c9-4976-83db-dfb8bca24593"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -28,7 +29,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#A8DADC"
       },
-      "package": "com.haithamassoli.hayat"
+      "package": "com.haithamassoli.hayat",
+      "googleServicesFile": "./google-services.json"
     },
     "extra": {
       "firebase": {
@@ -42,6 +44,9 @@
       "eas": {
         "projectId": "0b7297c7-a0c9-4976-83db-dfb8bca24593"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
