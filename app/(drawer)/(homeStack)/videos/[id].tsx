@@ -1,7 +1,7 @@
 import { Box, ReText } from "@styles/theme";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { Video, ResizeMode } from "expo-av";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InfoCard from "@components/infoCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -16,9 +16,13 @@ import {
 } from "@src/types/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStore } from "@zustand/store";
-import { dateFromNow } from "@utils/helper";
+import {
+  dateFromNow,
+  getDataFromStorage,
+  storeDataToStorage,
+} from "@utils/helper";
 import Snackbar from "@components/snackbar";
-import { ScrollView } from "react-native";
+import { ScrollView, Share, TouchableOpacity } from "react-native";
 import Header from "@components/header";
 import {
   addCommentMutation,
@@ -36,6 +40,7 @@ const VideoScreen = () => {
   const video = useRef(null);
   const { user } = useStore();
   const [status, setStatus] = useState({});
+  const [like, setLike] = useState<"dislike" | "like" | null>(null);
   const { isLoading, data: categories, refetch } = fetchCategoriesQuery();
 
   const category = categories?.filter((category) => category.route === id);
@@ -53,6 +58,26 @@ const VideoScreen = () => {
       resolver: zodResolver(validationCommentSchema),
     }
   );
+
+  const onPressLike = async () => {
+    if (like === "like") {
+      setLike(null);
+      await storeDataToStorage(`like-${videoTitle}`, null);
+    } else {
+      setLike("like");
+      await storeDataToStorage(`like-${videoTitle}`, "like");
+    }
+  };
+
+  const onPressDislike = async () => {
+    if (like === "dislike") {
+      setLike(null);
+      await storeDataToStorage(`like-${videoTitle}`, null);
+    } else {
+      setLike("dislike");
+      await storeDataToStorage(`like-${videoTitle}`, "dislike");
+    }
+  };
 
   const onSubmit = (formData: validationCommentSchemaType) => {
     if (!user)
@@ -78,6 +103,15 @@ const VideoScreen = () => {
       }
     );
   };
+
+  const getLike = async () => {
+    const like = await getDataFromStorage(`like-${videoTitle}`);
+    setLike(like);
+  };
+
+  useEffect(() => {
+    getLike();
+  }, []);
 
   if (isLoading || isLoadingUser) return <Loading />;
 
@@ -125,18 +159,41 @@ const VideoScreen = () => {
               justifyContent="space-between"
               marginHorizontal="hm"
             >
-              <Feather name="share-2" size={ms(24)} color={Colors.secondary} />
+              <TouchableOpacity
+                onPress={() =>
+                  Share.share({
+                    message: `تابع هذا الفيديو عن
+${data?.title}
+${doctorData?.name} للدكتور
+في تطبيق حيـاة
+https://play.google.com/store/apps/details?id=com.haithamassoli.hayat
+`,
+                  })
+                }
+              >
+                <Feather
+                  name="share-2"
+                  size={ms(24)}
+                  color={Colors.secondary}
+                />
+              </TouchableOpacity>
               <Box flexDirection="row" gap="hm">
-                <MaterialCommunityIcons
-                  name="thumb-down-outline"
-                  size={ms(26)}
-                  color={Colors.secondary}
-                />
-                <MaterialCommunityIcons
-                  name="thumb-up-outline"
-                  size={ms(26)}
-                  color={Colors.secondary}
-                />
+                <TouchableOpacity onPress={onPressDislike}>
+                  <MaterialCommunityIcons
+                    name={
+                      like === "dislike" ? "thumb-down" : "thumb-down-outline"
+                    }
+                    size={ms(26)}
+                    color={Colors.secondary}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onPressLike}>
+                  <MaterialCommunityIcons
+                    name={like === "like" ? "thumb-up" : "thumb-up-outline"}
+                    size={ms(26)}
+                    color={Colors.secondary}
+                  />
+                </TouchableOpacity>
               </Box>
             </Box>
           </Animated.View>
