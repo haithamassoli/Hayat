@@ -13,7 +13,7 @@ import { blurhash } from "@utils/helper";
 import { hs, ms, vs } from "@utils/platform";
 import { useStore } from "@zustand/store";
 import { Image } from "expo-image";
-import { useNavigation, useRouter } from "expo-router";
+import { useNavigation, router } from "expo-router";
 import { ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { FadeInUp } from "react-native-reanimated";
@@ -21,7 +21,6 @@ import Animated, { FadeInUp } from "react-native-reanimated";
 const HomeScreen = () => {
   const navigation: any = useNavigation();
   const { colors } = useTheme<Theme>();
-  const router = useRouter();
   const { isDark } = useStore();
   const { isLoading, data: categories } = fetchCategoriesQuery();
 

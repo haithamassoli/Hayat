@@ -2,11 +2,10 @@ import { Box, ReText } from "@styles/theme";
 import { Feather } from "@expo/vector-icons";
 import { hs, ms } from "@utils/platform";
 import Colors from "@styles/colors";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { TouchableOpacity } from "react-native";
 
 const Header = ({ title }: { title: string }) => {
-  const router = useRouter();
   return (
     <Box
       flexDirection="row"

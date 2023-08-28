@@ -2,7 +2,7 @@ import { Feather, Ionicons } from "@expo/vector-icons";
 import Colors from "@styles/colors";
 import { IconSize } from "@styles/size";
 import { Box, ReText, Theme } from "@styles/theme";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { TextInput } from "react-native-paper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +22,6 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import { useAuthRequest } from "expo-auth-session/providers/google";
 
 const SignIn = () => {
-  const router = useRouter();
   const { isConnected } = useNetInfo();
   const { colors } = useTheme<Theme>();
   const { control, handleSubmit } = useForm<ValidationSchemaType>({
@@ -109,7 +108,7 @@ const SignIn = () => {
             onPress={handleSubmit(onSubmit)}
             title="تسجيل الدخول"
           />
-          <TouchableOpacity onPress={() => router.push("sign-up")}>
+          <TouchableOpacity onPress={() => router.push("/sign-up")}>
             <ReText
               marginTop="hm"
               marginHorizontal="hs"

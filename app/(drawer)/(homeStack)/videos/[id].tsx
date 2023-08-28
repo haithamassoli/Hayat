@@ -1,5 +1,5 @@
 import { Box, ReText } from "@styles/theme";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Video, ResizeMode } from "expo-av";
 import { useEffect, useRef, useState } from "react";
 import InfoCard from "@components/infoCard";
@@ -34,7 +34,6 @@ import { getUserByIdQuery } from "@apis/auth";
 import Animated, { FadeInUp } from "react-native-reanimated";
 
 const VideoScreen = () => {
-  const router = useRouter();
   const { id, videoTitle }: { id?: string; videoTitle?: string } =
     useLocalSearchParams();
   const video = useRef(null);

@@ -1,11 +1,8 @@
-// @ts-nocheck
 import "react-native-gesture-handler";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider as ReThemeProvider } from "@shopify/restyle";
 import { StatusBar } from "expo-status-bar";
 import { useStore } from "@zustand/store";
-import * as Updates from "expo-updates";
 import { useFonts } from "expo-font";
 import { FlashList } from "@shopify/flash-list";
 import {
@@ -13,30 +10,21 @@ import {
   MD3LightTheme,
   TextInput,
   configureFonts,
+  Text,
 } from "react-native-paper";
 import { useCallback, useEffect } from "react";
 import { MaterialDark, MaterialLight, fontConfig } from "@styles/material";
 import { ThemeProvider } from "@react-navigation/native";
-import {
-  Text as PaperText,
-  TextInput as PaperTextInput,
-} from "react-native-paper";
-import { ThemeProp } from "react-native-paper/lib/typescript/src/types";
 import theme, { Box, ReText, darkTheme } from "@styles/theme";
 import Colors from "@styles/colors";
-import {
-  I18nManager,
-  Platform,
-  ScrollView,
-  Text,
-  UIManager,
-} from "react-native";
-import { Stack, SplashScreen, useSegments, useRouter } from "expo-router";
+import { I18nManager, Platform, ScrollView, UIManager } from "react-native";
+import { Stack, SplashScreen, useSegments, router } from "expo-router";
 import {
   DarkNavigationColors,
   LightNavigationColors,
 } from "@styles/navigation";
 import { getTheme, getUserFromStorage } from "@utils/helper";
+import { reloadAsync } from "expo-updates";
 
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -47,7 +35,7 @@ if (Platform.OS === "android") {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: false,
+      retry: 2,
       staleTime: Infinity,
       refetchInterval: false,
       refetchOnMount: false,
@@ -67,52 +55,29 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   TextInput.defaultProps = TextInput.defaultProps || {};
   TextInput.defaultProps.allowFontScaling = false;
-  PaperTextInput.defaultProps = PaperTextInput.defaultProps || {};
-  PaperTextInput.defaultProps.allowFontScaling = false;
-
   Text.defaultProps = Text.defaultProps || {};
   Text.defaultProps.allowFontScaling = false;
   ReText.defaultProps = ReText.defaultProps || {};
   ReText.defaultProps.allowFontScaling = false;
-  PaperText.defaultProps = PaperText.defaultProps || {};
-  PaperText.defaultProps.allowFontScaling = false;
 
   ScrollView.defaultProps = ScrollView.defaultProps || {};
   ScrollView.defaultProps.showsVerticalScrollIndicator = false;
   ScrollView.defaultProps.showsHorizontalScrollIndicator = false;
-
-  KeyboardAwareScrollView.defaultProps =
-    KeyboardAwareScrollView.defaultProps || {};
-  KeyboardAwareScrollView.defaultProps.showsVerticalScrollIndicator = false;
-  KeyboardAwareScrollView.defaultProps.showsHorizontalScrollIndicator = false;
 
   FlashList.defaultProps = FlashList.defaultProps || {};
   FlashList.defaultProps.showsVerticalScrollIndicator = false;
   FlashList.defaultProps.showsHorizontalScrollIndicator = false;
 
   const segments = useSegments();
-  const router = useRouter();
 
   const { isDark, user } = useStore();
-
-  const onFetchUpdateAsync = async () => {
-    try {
-      const update = await Updates.checkForUpdateAsync();
-      if (update.isAvailable) {
-        await Updates.fetchUpdateAsync();
-        await Updates.reloadAsync();
-      }
-    } catch (error) {
-      console.log(`Error fetching latest Expo update: ${error}`);
-    }
-  };
 
   const forceRTL = async () => {
     if (!I18nManager.isRTL) {
       try {
         I18nManager.allowRTL(true);
         I18nManager.forceRTL(true);
-        await Updates.reloadAsync();
+        await reloadAsync();
       } catch (error) {
         console.log(error);
       }
@@ -123,7 +88,6 @@ export default function RootLayout() {
     forceRTL();
     getUserFromStorage();
     getTheme();
-    onFetchUpdateAsync();
   }, []);
 
   useEffect(() => {
@@ -150,7 +114,7 @@ export default function RootLayout() {
     return null;
   }
 
-  const materialTheme: ThemeProp = {
+  const materialTheme: any = {
     ...MD3LightTheme,
     dark: isDark,
     isV3: true,

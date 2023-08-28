@@ -7,13 +7,12 @@ import { Box, ReText } from "@styles/theme";
 import { blurhash } from "@utils/helper";
 import { hs, ms, vs } from "@utils/platform";
 import { Image } from "expo-image";
-import { Stack, useRouter, useLocalSearchParams } from "expo-router";
+import { Stack, router, useLocalSearchParams } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { FadeInUp } from "react-native-reanimated";
 
 const Category = () => {
-  const router = useRouter();
   const { id }: { id?: string } = useLocalSearchParams();
   const { isLoading, data: categories } = fetchCategoriesQuery();
 
