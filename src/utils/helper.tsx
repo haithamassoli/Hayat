@@ -3,6 +3,7 @@ import { Dimensions } from "react-native";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ar";
+import { useStore } from "@zustand/store";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ar");
@@ -41,3 +42,25 @@ export const dateFromNow = (date: Date) => {
 
 export const blurhash =
   "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
+
+export const getTheme = async () => {
+  try {
+    const darkMode = await getDataFromStorage("isDark");
+    if (darkMode === null) {
+      useStore.setState({ isDark: false });
+    } else {
+      useStore.setState({ isDark: darkMode });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserFromStorage = async () => {
+  try {
+    const user = await getDataFromStorage("user");
+    if (user) useStore.setState({ user });
+  } catch (error) {
+    console.log(error);
+  }
+};

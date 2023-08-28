@@ -168,7 +168,7 @@ const HomeScreen = () => {
                 transition={400}
                 style={{
                   width: ms(100),
-                  height: vs(100),
+                  height: ms(100),
                   marginHorizontal: hs(8),
                 }}
               />

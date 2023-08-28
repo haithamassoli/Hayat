@@ -36,7 +36,7 @@ import {
   DarkNavigationColors,
   LightNavigationColors,
 } from "@styles/navigation";
-import { getDataFromStorage } from "@utils/helper";
+import { getTheme, getUserFromStorage } from "@utils/helper";
 
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -63,40 +63,6 @@ export const unstable_settings = {
 };
 
 SplashScreen.preventAutoHideAsync();
-
-const forceRTL = async () => {
-  if (!I18nManager.isRTL) {
-    try {
-      I18nManager.allowRTL(true);
-      I18nManager.forceRTL(true);
-      await Updates.reloadAsync();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-};
-
-const getTheme = async () => {
-  try {
-    const darkMode = await getDataFromStorage("isDark");
-    if (darkMode === null) {
-      useStore.setState({ isDark: false });
-    } else {
-      useStore.setState({ isDark: darkMode });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const getUserFromStorage = async () => {
-  try {
-    const user = await getDataFromStorage("user");
-    if (user) useStore.setState({ user });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export default function RootLayout() {
   TextInput.defaultProps = TextInput.defaultProps || {};
@@ -127,7 +93,7 @@ export default function RootLayout() {
   const segments = useSegments();
   const router = useRouter();
 
-  const { isDark, user } = useStore((state) => state);
+  const { isDark, user } = useStore();
 
   const onFetchUpdateAsync = async () => {
     try {
@@ -137,8 +103,19 @@ export default function RootLayout() {
         await Updates.reloadAsync();
       }
     } catch (error) {
-      // You can also add an alert() to see the error message in case of an error when fetching updates.
       console.log(`Error fetching latest Expo update: ${error}`);
+    }
+  };
+
+  const forceRTL = async () => {
+    if (!I18nManager.isRTL) {
+      try {
+        I18nManager.allowRTL(true);
+        I18nManager.forceRTL(true);
+        await Updates.reloadAsync();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
