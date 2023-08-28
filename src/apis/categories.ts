@@ -76,6 +76,19 @@ const addComment = async (
     const videoIndex = videos.findIndex(
       (video: Video) => video.title === data.videoTitle
     );
+    if (!Array.isArray(videos[videoIndex].comments)) {
+      videos[videoIndex].comments = [
+        {
+          name: data.name,
+          comment: data.comment,
+          createdAt: new Date(),
+        },
+      ];
+      await updateDoc(categoriesRef, {
+        videos: videos,
+      });
+      return null;
+    }
     videos[videoIndex].comments.push({
       name: data.name,
       comment: data.comment,

@@ -16,7 +16,9 @@ const Category = () => {
   const { id }: { id?: string } = useLocalSearchParams();
   const { isLoading, data: categories } = fetchCategoriesQuery();
 
-  categories?.filter((category) => category.route === id);
+  const filteredCategory = categories?.filter(
+    (category) => category.route === id
+  );
 
   if (isLoading) return <Loading />;
 
@@ -68,14 +70,14 @@ const Category = () => {
           </ReText>
         </Animated.View>
         <Box gap="vm">
-          {Array.isArray(categories) &&
-            categories[0].videos?.map((video: Video, index: number) => (
+          {Array.isArray(filteredCategory) &&
+            filteredCategory[0].videos?.map((video: Video, index: number) => (
               <Animated.View
                 key={index.toString()}
                 entering={FadeInUp.duration(600).delay(200 * index)}
               >
                 <VideoButton
-                  title={`1. ${video.title}`}
+                  title={`${index + 1}. ${video.title}`}
                   onPress={() =>
                     router.push(`/videos/${id}?videoTitle=${video.title}`)
                   }

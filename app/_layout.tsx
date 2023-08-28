@@ -23,8 +23,8 @@ import {
   DarkNavigationColors,
   LightNavigationColors,
 } from "@styles/navigation";
-import { getTheme, getUserFromStorage } from "@utils/helper";
 import { reloadAsync } from "expo-updates";
+import { getDataFromStorage } from "@utils/helper";
 
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -51,6 +51,28 @@ export const unstable_settings = {
 };
 
 SplashScreen.preventAutoHideAsync();
+
+const getTheme = async () => {
+  try {
+    const darkMode = await getDataFromStorage("isDark");
+    if (darkMode === null) {
+      useStore.setState({ isDark: false });
+    } else {
+      useStore.setState({ isDark: darkMode });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getUserFromStorage = async () => {
+  try {
+    const user = await getDataFromStorage("user");
+    if (user) useStore.setState({ user });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default function RootLayout() {
   TextInput.defaultProps = TextInput.defaultProps || {};
