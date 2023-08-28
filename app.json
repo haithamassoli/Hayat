@@ -19,12 +19,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "0.1.0",
+      "buildNumber": "1.0.0",
       "supportsTablet": true,
       "bundleIdentifier": "com.haithamassoli.hayat"
     },
     "android": {
-      "versionCode": 4,
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#A8DADC"

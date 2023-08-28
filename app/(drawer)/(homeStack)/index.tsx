@@ -88,9 +88,11 @@ const HomeScreen = () => {
             marginVertical: vs(12),
           }}
         >
-          {categories?.map((category) => (
+          {categories?.map((category, index) => (
             <Box key={category.id} marginHorizontal="hs">
-              <Animated.View entering={FadeInUp.duration(600).delay(600)}>
+              <Animated.View
+                entering={FadeInUp.duration(600).delay(index * 200 + 600)}
+              >
                 <CategoryCard
                   onPress={() => router.push(`/categories/${category.route}`)}
                   title={category.title}
@@ -118,9 +120,11 @@ const HomeScreen = () => {
             marginVertical: vs(12),
           }}
         >
-          {doctors.map((doctor) => (
+          {doctors.map((doctor, index) => (
             <Box key={doctor.uid} marginHorizontal="hs">
-              <Animated.View entering={FadeInUp.duration(600).delay(1000)}>
+              <Animated.View
+                entering={FadeInUp.duration(600).delay(index * 200 + 1000)}
+              >
                 <DoctorCard
                   onPress={() => {
                     router.push(`/chats/${doctor.uid}`);
@@ -151,10 +155,10 @@ const HomeScreen = () => {
             marginVertical: vs(12),
           }}
         >
-          {official.map((official) => (
+          {official.map((official, index) => (
             <Animated.View
               key={official.id}
-              entering={FadeInUp.duration(600).delay(1400)}
+              entering={FadeInUp.duration(600).delay(index * 200 + 1400)}
             >
               <Image
                 source={official.image}
