@@ -10,7 +10,6 @@ import { Image } from "expo-image";
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Animated, { FadeInUp } from "react-native-reanimated";
 
 const Category = () => {
   const { id }: { id?: string } = useLocalSearchParams();
@@ -58,32 +57,26 @@ const Category = () => {
         transition={400}
       />
       <Box marginHorizontal="hm">
-        <Animated.View entering={FadeInUp.duration(600)}>
-          <ReText
-            variant="HeadlineMedium"
-            fontFamily="CairoBold"
-            textAlign="left"
-            color="ternary"
-            marginTop="vs"
-          >
-            المحاضرات التربوية
-          </ReText>
-        </Animated.View>
+        <ReText
+          variant="HeadlineMedium"
+          fontFamily="CairoBold"
+          textAlign="left"
+          color="ternary"
+          marginTop="vs"
+        >
+          المحاضرات
+        </ReText>
         <Box gap="vm">
           {Array.isArray(filteredCategory) &&
             filteredCategory[0].videos?.map((video: Video, index: number) => (
-              <Animated.View
+              <VideoButton
                 key={index.toString()}
-                entering={FadeInUp.duration(600).delay(200 * index)}
-              >
-                <VideoButton
-                  title={`${index + 1}. ${video.title}`}
-                  onPress={() =>
-                    router.push(`/videos/${id}?videoTitle=${video.title}`)
-                  }
-                  duration={video.duration}
-                />
-              </Animated.View>
+                title={`${index + 1}. ${video.title}`}
+                onPress={() =>
+                  router.push(`/videos/${id}?videoTitle=${video.title}`)
+                }
+                duration={video.duration}
+              />
             ))}
         </Box>
       </Box>

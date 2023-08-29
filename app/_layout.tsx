@@ -23,7 +23,7 @@ import {
   DarkNavigationColors,
   LightNavigationColors,
 } from "@styles/navigation";
-import { reloadAsync } from "expo-updates";
+import RNRestart from "react-native-restart";
 import { getDataFromStorage } from "@utils/helper";
 
 if (Platform.OS === "android") {
@@ -94,12 +94,12 @@ export default function RootLayout() {
 
   const { isDark, user } = useStore();
 
-  const forceRTL = async () => {
+  const forceRTL = () => {
     if (!I18nManager.isRTL) {
       try {
         I18nManager.allowRTL(true);
         I18nManager.forceRTL(true);
-        await reloadAsync();
+        RNRestart.restart();
       } catch (error) {
         console.log(error);
       }
