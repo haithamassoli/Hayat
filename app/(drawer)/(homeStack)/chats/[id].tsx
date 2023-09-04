@@ -23,8 +23,9 @@ import {
   Send,
 } from "react-native-gifted-chat";
 import { useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { FadeInUp } from "react-native-reanimated";
+import { Box } from "@styles/theme";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Message = {
   _id: number;
@@ -101,7 +102,12 @@ const ChatScreen = () => {
   if (isLoadingUser) return <Loading />;
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <Box
+      flex={1}
+      style={{
+        paddingTop: useSafeAreaInsets().top,
+      }}
+    >
       <Animated.View entering={FadeInUp.duration(600)}>
         <Header title={doctorData?.name} />
       </Animated.View>
@@ -191,7 +197,7 @@ const ChatScreen = () => {
           }}
         />
       </Animated.View>
-    </SafeAreaView>
+    </Box>
   );
 };
 

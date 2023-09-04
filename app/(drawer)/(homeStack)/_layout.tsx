@@ -6,6 +6,7 @@ const HomeStack = () => {
     <Stack
       screenOptions={{
         headerTitleAlign: "center",
+        animation: "slide_from_left",
         headerBackTitle: "الرجوع",
         headerBackTitleVisible: false,
         headerShown: false,

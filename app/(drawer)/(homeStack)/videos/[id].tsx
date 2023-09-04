@@ -6,7 +6,7 @@ import InfoCard from "@components/infoCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import Colors from "@styles/colors";
-import { ms, vs } from "@utils/platform";
+import { isIOS, ms, vs } from "@utils/platform";
 import { Avatar, Divider, TextInput } from "react-native-paper";
 import ControlledInput from "@components/ui/controlledInput";
 import { useForm } from "react-hook-form";
@@ -142,7 +142,14 @@ const VideoScreen = () => {
           />
         </Animated.View>
         <Box flex={1} marginHorizontal="hm" gap="vm" marginTop="vm">
-          <Animated.View entering={FadeInUp.duration(600).delay(400)}>
+          <Animated.View
+            entering={FadeInUp.duration(600)
+              .delay(400)
+              .withInitialValues({
+                opacity: isIOS ? 0 : 1,
+                transform: [{ translateY: vs(-25) }],
+              })}
+          >
             <InfoCard
               name={doctorData?.name}
               specialty={doctorData?.specialty}
