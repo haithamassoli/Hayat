@@ -1,7 +1,9 @@
 import { Video, fetchCategoriesQuery } from "@apis/categories";
 import Loading from "@components/loading";
+import NoConnection from "@components/noConnection";
 import VideoButton from "@components/ui/videoButton";
 import { Feather } from "@expo/vector-icons";
+import { useNetInfo } from "@react-native-community/netinfo";
 import Colors from "@styles/colors";
 import { Box, ReText } from "@styles/theme";
 import { blurhash } from "@utils/helper";
@@ -14,12 +16,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Category = () => {
   const { id }: { id?: string } = useLocalSearchParams();
-  const { isLoading, data: categories } = fetchCategoriesQuery();
+  const { isLoading, data: categories, refetch } = fetchCategoriesQuery();
+  const { isConnected } = useNetInfo();
 
   const filteredCategory = categories?.filter(
     (category) => category.route === id
   );
 
+  if (isConnected === false) return <NoConnection refetch={refetch} />;
   if (isLoading) return <Loading />;
 
   return (

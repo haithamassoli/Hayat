@@ -17,13 +17,17 @@ import { useNavigation, router } from "expo-router";
 import { ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { FadeInUp } from "react-native-reanimated";
+import NoConnection from "@components/noConnection";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 const HomeScreen = () => {
   const navigation: any = useNavigation();
   const { colors } = useTheme<Theme>();
   const { isDark } = useStore();
-  const { isLoading, data: categories } = fetchCategoriesQuery();
+  const { isLoading, data: categories, refetch } = fetchCategoriesQuery();
+  const { isConnected } = useNetInfo();
 
+  if (isConnected === false) return <NoConnection refetch={refetch} />;
   if (isLoading) return <Loading />;
 
   return (
@@ -36,7 +40,7 @@ const HomeScreen = () => {
             justifyContent="space-between"
             alignItems="center"
             marginEnd="hm"
-            height={60}
+            height={vs(60)}
           >
             <Box flexDirection="row" alignItems="center">
               <Image
@@ -53,13 +57,16 @@ const HomeScreen = () => {
             </Box>
             <Box flexDirection="row" alignItems="center" gap="hm">
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <Feather name="menu" size={hs(24)} color={colors.text} />
+                <Feather name="menu" size={ms(24)} color={colors.text} />
               </TouchableOpacity>
             </Box>
           </Box>
         </Animated.View>
         <Box marginTop="vm">
-          <Animated.View entering={FadeInUp.duration(600).delay(200)}>
+          <Animated.View
+            entering={FadeInUp.duration(600).delay(200)}
+            style={{ marginHorizontal: hs(16) }}
+          >
             <ImagesCarousel
               images={[
                 require("@assets/images/carousel/2.png"),

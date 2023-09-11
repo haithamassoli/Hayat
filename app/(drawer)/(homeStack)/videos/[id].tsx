@@ -32,10 +32,13 @@ import {
 import Loading from "@components/loading";
 import { getUserByIdQuery } from "@apis/auth";
 import Animated, { FadeInUp } from "react-native-reanimated";
+import NoConnection from "@components/noConnection";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 const VideoScreen = () => {
   const { id, videoTitle }: { id?: string; videoTitle?: string } =
     useLocalSearchParams();
+  const { isConnected } = useNetInfo();
   const video = useRef(null);
   const { user } = useStore();
   const [status, setStatus] = useState({});
@@ -113,6 +116,7 @@ const VideoScreen = () => {
   }, []);
 
   if (isLoading || isLoadingUser) return <Loading />;
+  if (isConnected === false) return <NoConnection refetch={refetch} />;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

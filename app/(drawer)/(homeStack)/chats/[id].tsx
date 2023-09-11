@@ -26,6 +26,8 @@ import { useTheme } from "react-native-paper";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import { Box } from "@styles/theme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import NoConnection from "@components/noConnection";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 type Message = {
   _id: number;
@@ -40,9 +42,14 @@ const ChatScreen = () => {
   const { id }: { id?: string } = useLocalSearchParams();
   const { colors } = useTheme();
   const { user } = useStore();
+  const { isConnected } = useNetInfo();
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const { data: doctorData, isLoading: isLoadingUser } = getUserByIdQuery(id!);
+  const {
+    data: doctorData,
+    isLoading: isLoadingUser,
+    refetch,
+  } = getUserByIdQuery(id!);
   const { mutate } = addMessageMutation();
 
   useEffect(() => {
@@ -100,6 +107,7 @@ const ChatScreen = () => {
   }, []);
 
   if (isLoadingUser) return <Loading />;
+  if (isConnected === false) return <NoConnection refetch={refetch} />;
 
   return (
     <Box
