@@ -26,10 +26,11 @@ import {
 import RNRestart from "react-native-restart";
 import { getDataFromStorage } from "@utils/helper";
 
-if (Platform.OS === "android") {
-  if (UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true);
-  }
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
 const queryClient = new QueryClient({
