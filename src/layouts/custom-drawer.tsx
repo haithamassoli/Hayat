@@ -9,12 +9,12 @@ import { useStore } from "@zustand/store";
 import { ms, vs } from "@utils/platform";
 import Loading from "@components/loading";
 import { logoutMutation } from "@apis/auth";
+import { ColorSchemeButton } from "@src/ColorSchemeButton";
 
 const CustomDrawer = (props: any) => {
   const { navigation } = props;
-  const { toggleTheme, isDark, user } = useStore();
+  const { user } = useStore();
   const { colors } = useTheme<Theme>();
-  const onToggleTheme = () => toggleTheme();
   const { mutate, isLoading } = logoutMutation();
 
   if (isLoading) return <Loading />;
@@ -80,21 +80,7 @@ const CustomDrawer = (props: any) => {
       </DrawerContentScrollView>
       <Divider horizontalInset bold />
       <Box padding="hm">
-        <TouchableOpacity
-          onPress={onToggleTheme}
-          style={{ paddingVertical: vs(16) }}
-        >
-          <Box flexDirection="row" alignItems="center">
-            <Feather
-              name={isDark ? "sun" : "moon"}
-              color={colors.text}
-              size={IconSize.m}
-            />
-            <ReText variant="LabelLarge" marginLeft="hs" fontFamily="CairoBold">
-              {isDark ? "الوضع النهاري" : "الوضع الليلي"}
-            </ReText>
-          </Box>
-        </TouchableOpacity>
+        <ColorSchemeButton />
         <TouchableOpacity
           onPress={() => {
             Share.share({

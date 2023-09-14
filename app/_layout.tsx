@@ -25,6 +25,7 @@ import {
 } from "@styles/navigation";
 import RNRestart from "react-native-restart";
 import { getDataFromStorage } from "@utils/helper";
+import { ColorSchemeProvider, useColorScheme } from "@src/ColorSchemeContext";
 
 if (
   Platform.OS === "android" &&
@@ -53,19 +54,6 @@ export const unstable_settings = {
 
 SplashScreen.preventAutoHideAsync();
 
-const getTheme = async () => {
-  try {
-    const darkMode = await getDataFromStorage("isDark");
-    if (darkMode === null) {
-      useStore.setState({ isDark: false });
-    } else {
-      useStore.setState({ isDark: darkMode });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const getUserFromStorage = async () => {
   try {
     const user = await getDataFromStorage("user");
@@ -75,25 +63,24 @@ const getUserFromStorage = async () => {
   }
 };
 
+TextInput.defaultProps = TextInput.defaultProps || {};
+TextInput.defaultProps.allowFontScaling = false;
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+ReText.defaultProps = ReText.defaultProps || {};
+ReText.defaultProps.allowFontScaling = false;
+
+ScrollView.defaultProps = ScrollView.defaultProps || {};
+ScrollView.defaultProps.showsVerticalScrollIndicator = false;
+ScrollView.defaultProps.showsHorizontalScrollIndicator = false;
+
+FlashList.defaultProps = FlashList.defaultProps || {};
+FlashList.defaultProps.showsVerticalScrollIndicator = false;
+FlashList.defaultProps.showsHorizontalScrollIndicator = false;
+
 export default function RootLayout() {
-  TextInput.defaultProps = TextInput.defaultProps || {};
-  TextInput.defaultProps.allowFontScaling = false;
-  Text.defaultProps = Text.defaultProps || {};
-  Text.defaultProps.allowFontScaling = false;
-  ReText.defaultProps = ReText.defaultProps || {};
-  ReText.defaultProps.allowFontScaling = false;
-
-  ScrollView.defaultProps = ScrollView.defaultProps || {};
-  ScrollView.defaultProps.showsVerticalScrollIndicator = false;
-  ScrollView.defaultProps.showsHorizontalScrollIndicator = false;
-
-  FlashList.defaultProps = FlashList.defaultProps || {};
-  FlashList.defaultProps.showsVerticalScrollIndicator = false;
-  FlashList.defaultProps.showsHorizontalScrollIndicator = false;
-
   const segments = useSegments();
-
-  const { isDark, user } = useStore();
+  const { user } = useStore();
 
   const forceRTL = () => {
     if (!I18nManager.isRTL) {
@@ -110,10 +97,10 @@ export default function RootLayout() {
   useEffect(() => {
     forceRTL();
     getUserFromStorage();
-    getTheme();
   }, []);
 
   useEffect(() => {
+    // @ts-ignore
     const inAuthGroup = segments.includes("profile");
     if (!user && inAuthGroup) {
       router.replace("/sign-in");
@@ -122,6 +109,18 @@ export default function RootLayout() {
     }
     console.log(segments);
   }, [user, segments]);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ColorSchemeProvider>
+        <App />
+      </ColorSchemeProvider>
+    </QueryClientProvider>
+  );
+}
+
+export const App = () => {
+  const { isDark } = useColorScheme();
 
   const [fontsLoaded] = useFonts({
     CairoReg: require("@assets/fonts/Cairo-Reg.ttf"),
@@ -149,29 +148,27 @@ export default function RootLayout() {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReThemeProvider theme={isDark ? darkTheme : theme}>
-        <StatusBar
-          style={isDark ? "light" : "dark"}
-          backgroundColor={
-            isDark ? Colors.darkBackground : Colors.lightBackground
-          }
-        />
-        <PaperProvider theme={materialTheme}>
-          <ThemeProvider
-            value={isDark ? DarkNavigationColors : LightNavigationColors}
-          >
-            <Box flex={1} onLayout={onLayoutRootView}>
-              <Stack
-                screenOptions={{
-                  headerShown: false,
-                  animation: "slide_from_left",
-                }}
-              />
-            </Box>
-          </ThemeProvider>
-        </PaperProvider>
-      </ReThemeProvider>
-    </QueryClientProvider>
+    <ReThemeProvider theme={isDark ? darkTheme : theme}>
+      <StatusBar
+        style={isDark ? "light" : "dark"}
+        backgroundColor={
+          isDark ? Colors.darkBackground : Colors.lightBackground
+        }
+      />
+      <PaperProvider theme={materialTheme}>
+        <ThemeProvider
+          value={isDark ? DarkNavigationColors : LightNavigationColors}
+        >
+          <Box flex={1} onLayout={onLayoutRootView}>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                animation: "slide_from_left",
+              }}
+            />
+          </Box>
+        </ThemeProvider>
+      </PaperProvider>
+    </ReThemeProvider>
   );
-}
+};

@@ -25,7 +25,7 @@
       "bundleIdentifier": "com.haithamassoli.hayat"
     },
     "android": {
-      "versionCode": 14,
+      "versionCode": 16,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#A8DADC"

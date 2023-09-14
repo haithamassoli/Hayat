@@ -11,7 +11,6 @@ import { official } from "@src/data/official";
 import { Box, ReText, Theme } from "@styles/theme";
 import { blurhash } from "@utils/helper";
 import { hs, ms, vs } from "@utils/platform";
-import { useStore } from "@zustand/store";
 import { Image } from "expo-image";
 import { useNavigation, router } from "expo-router";
 import { ScrollView, TouchableOpacity } from "react-native";
@@ -19,11 +18,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import NoConnection from "@components/noConnection";
 import { useNetInfo } from "@react-native-community/netinfo";
+import { useColorScheme } from "@src/ColorSchemeContext";
 
 const HomeScreen = () => {
   const navigation: any = useNavigation();
   const { colors } = useTheme<Theme>();
-  const { isDark } = useStore();
+  const { isDark } = useColorScheme();
   const { isLoading, data: categories, refetch } = fetchCategoriesQuery();
   const { isConnected } = useNetInfo();
 
