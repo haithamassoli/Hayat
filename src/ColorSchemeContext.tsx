@@ -116,8 +116,8 @@ export const useColorScheme = () => {
       });
       // 6. transition
       transition.value = 0;
-      transition.value = withTiming(1, { duration: 650 });
-      await wait(650);
+      transition.value = withTiming(1, { duration: 600 });
+      await wait(600);
       dispatch({
         active: false,
         isDark: newIsDark,
@@ -136,7 +136,7 @@ interface ColorSchemeProviderProps {
   children: ReactNode;
 }
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get("screen");
 const corners = [vec(0, 0), vec(width, 0), vec(width, height), vec(0, height)];
 
 export const ColorSchemeProvider = ({ children }: ColorSchemeProviderProps) => {
@@ -165,7 +165,7 @@ export const ColorSchemeProvider = ({ children }: ColorSchemeProviderProps) => {
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style={statusBarStyle} />
-      <View ref={ref} style={{ flex: 1 }}>
+      <View ref={ref} style={{ flex: 1 }} collapsable={false}>
         <ColorSchemeContext.Provider
           value={{
             active,

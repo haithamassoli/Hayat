@@ -26,6 +26,7 @@ import {
 import RNRestart from "react-native-restart";
 import { getDataFromStorage } from "@utils/helper";
 import { ColorSchemeProvider, useColorScheme } from "@src/ColorSchemeContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 if (
   Platform.OS === "android" &&
@@ -111,15 +112,17 @@ export default function RootLayout() {
   }, [user, segments]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ColorSchemeProvider>
-        <App />
-      </ColorSchemeProvider>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <QueryClientProvider client={queryClient}>
+        <ColorSchemeProvider>
+          <App />
+        </ColorSchemeProvider>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }
 
-export const App = () => {
+const App = () => {
   const { isDark } = useColorScheme();
 
   const [fontsLoaded] = useFonts({
